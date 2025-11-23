@@ -1,0 +1,27 @@
+﻿@model TEST.Models.Oddzial
+
+@{
+    ViewData["Title"] = "Usuń Oddział i Regały";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h1>Czy na pewno chcesz usunąć oddział?</h1>
+
+<div class="form-group">
+    <label for="MiastoAdres">Miasto oraz Adres</label>
+    <input type="text" id="MiastoAdres" class="form-control" value="@Model.MiastoAdres" disabled />
+</div>
+<div class="form-group">
+    <label for="KodPocztowy">Kod Pocztowy</label>
+    <input type="text" id="KodPocztowy" class="form-control" value="@Model.KodPocztowy" disabled />
+</div>
+
+    <form method="post" asp-action="Delete" asp-controller="Admin">
+        <input type="hidden" name="entity" value="@ViewData["Entity"]" />
+        <input type="hidden" name="IdOddzial" value="@Model.IdOddzial" />
+        <p>Jesteś pewny, że chcesz usunąć ten oddział? Usunięcie go wiąże się z usunięciem go trwale oraz wszystkich regałów z nim związanych</p>
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a href="@Url.Action("Index", "Admin", new { entity = "oddzialregal" })" class="btn btn-secondary">Anuluj</a>
+    </form>
+

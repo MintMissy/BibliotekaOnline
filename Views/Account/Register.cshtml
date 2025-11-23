@@ -1,0 +1,65 @@
+﻿@model RegisterViewModel
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 16vh; margin-top: 40px;">
+    <div class="card" style="width: 100%; max-width: 900px;">
+        <div class="card-body">
+            <h5 class="card-title text-center">Zarejestruj się</h5>
+            <form asp-action="Register" method="post">
+                <div class="row">
+                    <!-- Lewa strona (Login, Hasło, Email, Imię, Nazwisko, Nr Tel) -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Login" class="form-label">Login</label>
+                            <input asp-for="Login" class="form-control" placeholder="Wprowadź swój login" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Hasło</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Wprowadź swoje hasło" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Wprowadź swój email" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Imie" class="form-label">Imię</label>
+                            <input asp-for="Imie" class="form-control" placeholder="Wprowadź swoje imię" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Nazwisko" class="form-label">Nazwisko</label>
+                            <input asp-for="Nazwisko" class="form-control" placeholder="Wprowadź swoje nazwisko" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="NrTel" class="form-label">Numer Telefonu</label>
+                            <input asp-for="NrTel" class="form-control" placeholder="Wprowadź numer telefonu" required />
+                        </div>
+                    </div>
+
+                    <!-- Prawa strona (Adres, Miasto, Numer Pocztowy) -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Adres" class="form-label">Adres</label>
+                            <input asp-for="Adres" class="form-control" placeholder="Wprowadź swój adres" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Miasto" class="form-label">Miasto</label>
+                            <input asp-for="Miasto" class="form-control" placeholder="Wprowadź swoje miasto" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="NumerPocztowy" class="form-label">Numer Pocztowy</label>
+                            <input asp-for="NumerPocztowy" class="form-control" placeholder="Wprowadź numer pocztowy" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Zarejestruj się</button>
+            </form>
+        </div>
+    </div>
+</div>

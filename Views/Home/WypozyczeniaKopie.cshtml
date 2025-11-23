@@ -1,0 +1,71 @@
+﻿@model TEST.Models.WypozyczeniaKopieViewModel
+
+<h1>Wypożyczenia</h1>
+
+
+
+@if (Model != null)
+{
+    @if (User.IsInRole("Administrator") || User.IsInRole("Bibliotekarz"))
+    {
+        <a href="@Url.Action("AddWypozyczeniaKopie", "Admin", new { entity = "wypozyczeniakopie" })" class="btn btn-success">Dodaj nowe wypożyczenie</a>
+    }
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Imię i Nazwisko Czytelnika</th>
+                <th>Data Wypożyczenia</th>
+                <th>Data Zwrotu</th>
+                <th>Do kiedy maksymalnie zwrócić?</th>
+                <th>Oddział</th>
+                <th>Kopie</th>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Bibliotekarz"))
+                {
+                    <th>Akcje</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var wypozyczenie in Model.Wypozyczenia)
+            {
+                <tr>
+                    <td>@wypozyczenie.Czytelnicy?.Imie @wypozyczenie.Czytelnicy?.Nazwisko</td>
+                    <td>@wypozyczenie.DataWypozyczenia.ToShortDateString()</td>
+                    <td>@(wypozyczenie.DataZwrotu?.ToShortDateString() ?? "Brak zwrotu")</td>
+                    <td>@wypozyczenie.DataWypozyczenia.AddMonths(2).ToShortDateString()</td>
+                    <td>@wypozyczenie.Oddzial?.Miasto</td>
+                    <td>
+                        @foreach (var kopia in Model.Kopie.Where(k => k.IdKopii == wypozyczenie.IdKopii))
+                        {
+                            <div>
+                                @kopia.Ksiazka?.Tytul
+                            </div>
+                        }
+                    </td>
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <td>
+                            <a href="@Url.Action("Delete", "Admin", new { entity = "wypozyczeniakopie", id = wypozyczenie.IdWypozyczenia })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                        </td>
+                    }
+                    @if ((User.IsInRole("Bibliotekarz") || User.IsInRole("Administrator")) && wypozyczenie.DataZwrotu == null)
+                    {
+                        <td>
+                            <a href="@Url.Action("EditReturnDate", "Wypozyczenia", new { id = wypozyczenie.IdWypozyczenia })" class="btn btn-warning">Dodaj datę zwrotu</a>
+                        </td>
+                    }
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+
+   
+
+}
+else
+{
+    <div>Brak danych do wyświetlenia.</div>
+}
+

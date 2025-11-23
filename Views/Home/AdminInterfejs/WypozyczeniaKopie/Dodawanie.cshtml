@@ -1,0 +1,67 @@
+﻿@model TEST.Models.Wypozyczenia
+
+<h1>Dodaj Wypożyczenie</h1>
+
+<form asp-action="AddWypozyczeniaKopie" method="post">
+    <input type="hidden" name="entity" value="wypozyczenia" />
+
+    <div class="form-group">
+        <label for="IdKlienta">Klient</label>
+        <select id="IdKlienta" name="IdKlienta" class="form-control" required>
+            <option value="">-- Wybierz klienta --</option>
+            @foreach (var klient in ViewData["Klienci"] as IEnumerable<TEST.Models.Czytelnicy>)
+            {
+                <option value="@klient.IdKlienta">@klient.PełneImieNazwisko</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="IdKopii">Tytuł książki</label>
+        <select id="IdKopii" name="IdKopii" class="form-control" required>
+            <option value="">-- Wybierz książkę --</option>
+            @foreach (var kopia in ViewData["Kopie"] as IEnumerable<TEST.Models.Kopie>)
+            {
+                <option value="@kopia.IdKopii">@kopia.Ksiazka.Tytul</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="DataWypozyczenia">Data Wypożyczenia</label>
+        <input type="date" id="DataWypozyczenia" name="DataWypozyczenia" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="IdOddzial">Oddział</label>
+        <select id="IdOddzial" name="IdOddzial" class="form-control" required>
+            <option value="">-- Wybierz Oddział --</option>
+            @foreach (var oddzial in ViewData["Oddzialy"] as IEnumerable<TEST.Models.Oddzial>)
+            {
+                <option value="@oddzial.IdOddzial">@oddzial.Miasto - @oddzial.Adres</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="wypozyczeniakopie" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

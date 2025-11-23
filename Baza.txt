@@ -1,0 +1,390 @@
+-- Tabela Oddzial
+CREATE TABLE Oddzial (
+    id_oddzial SERIAL PRIMARY KEY,
+    adres VARCHAR(100),
+    kod_pocztowy VARCHAR(10),
+    miasto VARCHAR(50)
+);
+
+
+-- Tabela Autor
+CREATE TABLE Autor (
+    id_autora SERIAL PRIMARY KEY,
+    imie VARCHAR(50),
+    nazwisko VARCHAR(50),
+    data_urodzenia DATE
+);
+
+-- Tabela Wydawnictwo
+CREATE TABLE Wydawnictwo (
+    id_wydawnictwa SERIAL PRIMARY KEY,
+    nazwa_wydawnictwa VARCHAR(100),
+    siedziba VARCHAR(100),
+    data_zalozenia DATE
+);
+
+-- Tabela Pracownicy
+CREATE TABLE Pracownicy (
+    id_pracownicy SERIAL PRIMARY KEY,
+    imie VARCHAR(20),
+    nazwisko VARCHAR(20),
+    login VARCHAR(50),
+    haslo VARCHAR(50),
+    stanowisko VARCHAR(50),
+    id_oddzial INT NULL, 
+    FOREIGN KEY (id_oddzial) REFERENCES Oddzial(id_oddzial) ON DELETE CASCADE
+);
+
+
+-- Tabela Gatunek
+CREATE TABLE Gatunek (
+    id_gatunku SERIAL PRIMARY KEY,
+    nazwa_gatunku VARCHAR(50)
+);
+
+-- Tabela Regal
+CREATE TABLE Regal (
+    id_regal SERIAL PRIMARY KEY,
+    pietro INT,
+    nr_regalu INT,
+    id_oddzial INT NOT NULL,
+    id_gatunku INT NOT NULL,
+    FOREIGN KEY (id_oddzial) REFERENCES Oddzial(id_oddzial) ON DELETE CASCADE,
+    FOREIGN KEY (id_gatunku) REFERENCES Gatunek(id_gatunku) ON DELETE CASCADE
+
+);
+
+-- Tabela Ksiazka
+CREATE TABLE Ksiazka (
+    id_ksiazki SERIAL PRIMARY KEY,
+    tytul VARCHAR(100),
+    rok_wydania INT,
+    liczba_stron INT,
+    id_autora INT NOT NULL,
+    id_wydawnictwa INT NOT NULL,
+    id_gatunku INT NOT NULL,
+    FOREIGN KEY (id_autora) REFERENCES Autor(id_autora) ON DELETE CASCADE,
+    FOREIGN KEY (id_wydawnictwa) REFERENCES Wydawnictwo(id_wydawnictwa) ON DELETE CASCADE,
+    FOREIGN KEY (id_gatunku) REFERENCES Gatunek(id_gatunku) ON DELETE CASCADE
+);
+
+-- Tabela Czytelnicy
+CREATE TABLE Czytelnicy (
+    id_klienta SERIAL PRIMARY KEY,
+    imie VARCHAR(20),
+    nazwisko VARCHAR(20),
+    login VARCHAR(50),
+    haslo VARCHAR(50),
+    miasto VARCHAR(50),
+    adres VARCHAR(100),
+    numer_pocztowy VARCHAR(10),
+    nr_tel VARCHAR(20),
+    email VARCHAR(50)
+);
+
+-- Tabela Kopie
+CREATE TABLE Kopie (
+    id_kopii SERIAL PRIMARY KEY,
+    id_ksiazki INT NOT NULL,
+    czy_dostepna CHAR(1),
+    id_regal INT NOT NULL,
+    id_oddzial INT NOT NULL,
+    FOREIGN KEY (id_ksiazki) REFERENCES Ksiazka(id_ksiazki) ON DELETE CASCADE,
+    FOREIGN KEY (id_regal) REFERENCES Regal(id_regal) ON DELETE CASCADE,
+    FOREIGN KEY (id_oddzial) REFERENCES Oddzial(id_oddzial) ON DELETE CASCADE
+);
+
+-- Tabela Wypozyczenia
+CREATE TABLE Wypozyczenia (
+    id_wypozyczenia SERIAL PRIMARY KEY,
+    id_klienta INT NOT NULL,
+    id_kopii INT NOT NULL,
+    data_wypozyczenia DATE,
+    data_zwrotu DATE,
+    id_oddzial INT,
+    FOREIGN KEY (id_klienta) REFERENCES Czytelnicy(id_klienta) ON DELETE CASCADE,
+    FOREIGN KEY (id_kopii) REFERENCES Kopie(id_kopii) ON DELETE CASCADE,
+    FOREIGN KEY (id_oddzial) REFERENCES Oddzial(id_oddzial) ON DELETE CASCADE
+);
+
+
+
+INSERT INTO Oddzial VALUES 
+(1, 'ul. Główna 1', '00-001', 'Warszawa'),
+(2, 'ul. Marszałkowska 10', '00-002', 'Warszawa'),
+(3, 'ul. Długa 15', '00-003', 'Kraków'),
+(4, 'ul. Krótka 7', '00-004', 'Wrocław'),
+(5, 'ul. Zielona 20', '00-005', 'Gdańsk');
+
+INSERT INTO Autor VALUES 
+(1, 'Adam', 'Mickiewicz', '1798-12-24'),
+(2, 'Henryk', 'Sienkiewicz', '1846-05-05'),
+(3, 'J.K.', 'Rowling', '1965-07-31'),
+(4, 'George', 'Orwell', '1903-06-25'),
+(5, 'Stephen', 'King', '1947-09-21'),
+(6, 'Isaac', 'Asimov', '1920-01-02'),
+(7, 'J.R.R.', 'Tolkien', '1892-01-03'),
+(8, 'Agatha', 'Christie', '1890-09-15'),
+(9, 'Ernest', 'Hemingway', '1899-07-21'),
+(10, 'H.P.', 'Lovecraft', '1890-08-20');
+
+
+INSERT INTO Wydawnictwo VALUES 
+(1, 'Penguin Books', 'Londyn', '1935-07-30'),
+(2, 'HarperCollins', 'Nowy Jork', '1989-01-01'),
+(3, 'Simon & Schuster', 'Nowy Jork', '1924-01-02'),
+(4, 'Macmillan Publishers', 'Londyn', '1843-01-01'),
+(5, 'Hachette Livre', 'Paryż', '1826-01-01'),
+(6, 'Wydawnictwo Zysk i S-ka', 'Poznań', '1995-06-10'),
+(7, 'Wydawnictwo Literackie', 'Kraków', '2000-11-21'),
+(8, 'Wydawnictwo Agora', 'Warszawa', '1993-03-05'),
+(9, 'Wydawnictwo Czarne', 'Wołowiec', '1997-07-15'),
+(10, 'Wydawnictwo Sine Qua Non', 'Warszawa', '2001-08-25'),
+(11, 'Wydawnictwo Prószyński i S-ka', 'Warszawa', '1998-09-19'),
+(12, 'Wydawnictwo Znak', 'Kraków', '1989-04-22');
+
+
+
+INSERT INTO Pracownicy VALUES 
+(1, 'Jan', 'Kowalski', 'jkowalski', 'haslo123', 'Bibliotekarz', 1),
+(2, 'Anna', 'Nowak', 'anowak', 'haslo456', 'Bibliotekarz', 1),
+(3, 'Piotr', 'Wiśniewski', 'pwisniewski', 'haslo789', 'Bibliotekarz', 1),
+(4, 'Maria', 'Zielińska', 'mzielinska', 'hasloabc', 'Bibliotekarz', 2),
+(5, 'Tomasz', 'Kozłowski', 'tkozlowski', 'hasloxyz', 'Bibliotekarz', 2),
+(6, 'Joanna', 'Mazur', 'jmazur', 'haslo321', 'Bibliotekarz', 2),
+(7, 'Krzysztof', 'Szymański', 'kszymanski', 'haslo654', 'Bibliotekarz', 3),
+(8, 'Aleksandra', 'Kowal', 'akowal', 'haslo987', 'Bibliotekarz', 3),
+(9, 'Paweł', 'Kamiński', 'pkaminski', 'hasloqwe', 'Bibliotekarz', 3),
+(10, 'Ewa', 'Dąbrowska', 'edabrowska', 'hasloasd', 'Bibliotekarz', 4),
+(11, 'Michał', 'Grabowski', 'mgrabowski', 'haslozxc', 'Bibliotekarz', 4),
+(12, 'Zofia', 'Malinowska', 'zmalinowska', 'haslo123q', 'Bibliotekarz', 4),
+(13, 'Robert', 'Piotrowski', 'rpiotrowski', 'haslo456w', 'Bibliotekarz', 5),
+(14, 'Katarzyna', 'Lewandowska', 'klewandowska', 'haslo789e', 'Bibliotekarz', 5),
+(15, 'Grzegorz', 'Król', 'gkrol', 'hasloxyz9', 'Bibliotekarz', 5),
+(16, 'Admin', 'Admin', 'admin', 'zaq1@WSX', 'Administrator', null);
+
+
+INSERT INTO Gatunek VALUES 
+(1, 'Romans'), (2, 'Fantastyka i Science Fiction'),
+(3, 'Powieść historyczna'), (4, 'Horror'),
+(5, 'Kryminał i Thriller'), (6, 'Biografia i reportaż'),
+(7, 'Książki dla młodzieży');
+
+-- Dodawanie regałów do oddziału Warszawa (ul. Główna) z 24 regałami
+INSERT INTO Regal (pietro, nr_regalu, id_oddzial, id_gatunku) VALUES 
+(1, 101, 1, 1), (1, 102, 1, 2), (1, 103, 1, 3), (1, 104, 1, 4), (1, 105, 1, 5),
+(1, 106, 1, 6), (1, 107, 1, 7), (1, 108, 1, 1), (1, 109, 1, 2), (1, 110, 1, 3),
+(1, 111, 1, 4), (1, 112, 1, 5), -- 12 regałów na 1. piętrze
+(2, 113, 1, 6), (2, 114, 1, 7), (2, 115, 1, 1), (2, 116, 1, 2), (2, 117, 1, 3),
+(2, 118, 1, 4), (2, 119, 1, 5), (2, 120, 1, 6), (2, 121, 1, 7), (2, 122, 1, 1),
+(2, 123, 1, 2), (2, 124, 1, 3); -- 12 regałów na 2. piętrze
+
+-- Dodawanie regałów do oddziału Warszawa (ul. Marszałkowska) z 15 regałami na 1. piętrze
+INSERT INTO Regal (pietro, nr_regalu, id_oddzial, id_gatunku) VALUES 
+(1, 101, 2, 1), (1, 102, 2, 2), (1, 103, 2, 3), (1, 104, 2, 4), (1, 105, 2, 5),
+(1, 106, 2, 6), (1, 107, 2, 7), (1, 108, 2, 1), (1, 109, 2, 2), (1, 110, 2, 3),
+(1, 111, 2, 4), (1, 112, 2, 5), (1, 113, 2, 6), (1, 114, 2, 7), (1, 115, 2, 1);
+
+-- Dodawanie regałów do oddziału Kraków (ul. Długa) z 15 regałami na 1. piętrze
+INSERT INTO Regal (pietro, nr_regalu, id_oddzial, id_gatunku) VALUES 
+(1, 101, 3, 1), (1, 102, 3, 2), (1, 103, 3, 3), (1, 104, 3, 4), (1, 105, 3, 5),
+(1, 106, 3, 6), (1, 107, 3, 7), (1, 108, 3, 1), (1, 109, 3, 2), (1, 110, 3, 3),
+(1, 111, 3, 4), (1, 112, 3, 5), (1, 113, 3, 6), (1, 114, 3, 7), (1, 115, 3, 1);
+
+-- Dodawanie regałów do oddziału Wrocław (ul. Krótka) z 15 regałami na 1. piętrze
+INSERT INTO Regal (pietro, nr_regalu, id_oddzial, id_gatunku) VALUES 
+(1, 101, 4, 1), (1, 102, 4, 2), (1, 103, 4, 3), (1, 104, 4, 4), (1, 105, 4, 5),
+(1, 106, 4, 6), (1, 107, 4, 7), (1, 108, 4, 1), (1, 109, 4, 2), (1, 110, 4, 3),
+(1, 111, 4, 4), (1, 112, 4, 5), (1, 113, 4, 6), (1, 114, 4, 7), (1, 115, 4, 1);
+
+-- Dodawanie regałów do oddziału Gdańsk (ul. Zielona) z 15 regałami na 1. piętrze
+INSERT INTO Regal (pietro, nr_regalu, id_oddzial, id_gatunku) VALUES 
+(1, 101, 5, 1), (1, 102, 5, 2), (1, 103, 5, 3), (1, 104, 5, 4), (1, 105, 5, 5),
+(1, 106, 5, 6), (1, 107, 5, 7), (1, 108, 5, 1), (1, 109, 5, 2), (1, 110, 5, 3),
+(1, 111, 5, 4), (1, 112, 5, 5), (1, 113, 5, 6), (1, 114, 5, 7), (1, 115, 5, 1);
+
+
+INSERT INTO Ksiazka (id_ksiazki, tytul, rok_wydania, liczba_stron, id_autora, id_wydawnictwa, id_gatunku) VALUES
+(1, 'Tajemnica zaginionego miasta', 2020, 350, 1, 1, 2),  
+(2, 'W krainie fantazji', 2019, 420, 2, 2, 2),            
+(3, 'Złodziejka cieni', 2021, 330, 3, 3, 4),              
+(4, 'Kryształowy labirynt', 2018, 400, 4, 4, 3),          
+(5, 'Zbrodnia w przeszłości', 2017, 380, 5, 5, 5),        
+(6, 'Przeznaczenie w ogniu', 2023, 450, 6, 6, 1),         
+(7, 'Podróż do końca świata', 2020, 310, 7, 7, 7),        
+(8, 'Cień w mroku', 2019, 360, 8, 8, 2),                  
+(9, 'Tajemnica burzowego lasu', 2018, 375, 9, 9, 3),      
+(10, 'Złote serce', 2021, 395, 10, 10, 5),               
+(11, 'Morderstwo na Wzgórzu', 2022, 280, 1, 11, 4),      
+(12, 'Przez mgłę', 2019, 340, 2, 12, 6),              
+(13, 'Niewinność stracona', 2020, 330, 3, 1, 1),       
+(14, 'Śmierć na kartach historii', 2017, 410, 4, 5, 5), 
+(15, 'Obce światy', 2023, 400, 5, 6, 7),              
+(16, 'Chłodna kraina', 2022, 360, 6, 7, 2),           
+(17, 'Skradzione marzenia', 2018, 370, 7, 8, 3),      
+(18, 'Kryształowy księżyc', 2021, 420, 8, 9, 4),       
+(19, 'Demon w cieniach', 2023, 450, 9, 10, 5),         
+(20, 'Przeznaczenie odwrócone', 2022, 400, 10, 11, 6),   
+(21, 'Zgubiona pamięć', 2019, 340, 1, 12, 7),          
+(22, 'Powrót z martwych', 2021, 380, 2, 7, 2),        
+(23, 'Zaginiona cywilizacja', 2020, 390, 3, 9, 3),    
+(24, 'Tajemnica w sercu lasu', 2018, 320, 4, 10, 4),  
+(25, 'Pojedynek w mroku', 2023, 415, 5, 11, 5),       
+(26, 'W cieniu przeszłości', 2021, 380, 6, 6, 6),     
+(27, 'Zabójca z innej rzeczywistości', 2020, 375, 7, 7, 7),
+(28, 'Nieznana droga', 2019, 365, 8, 8, 2),          
+(29, 'Kraina zapomnianych', 2021, 385, 9, 9, 3),     
+(30, 'Ostatnia szansa', 2022, 300, 10, 10, 4);          
+
+
+INSERT INTO Czytelnicy VALUES
+(1, 'Jan', 'Kowalski', 'jan.kowalski', 'password123', 'Warszawa', 'ul. Łaskotna 12', '00-950', '123456789', 'jan.kowalski@example.com'),
+(2, 'Anna', 'Nowak', 'anna.nowak', 'password456', 'Kraków', 'ul. Mściwa 3', '30-840', '234567890', 'anna.nowak@example.com'),
+(3, 'Piotr', 'Wiśniewski', 'piotr.wisniewski', 'password789', 'Wrocław', 'ul. Pięciomorgowa 7', '50-950', '345678901', 'piotr.wisniewski@example.com'),
+(4, 'Maria', 'Kowalczyk', 'maria.kowalczyk', 'password012', 'Poznań', 'ul. Kwiatowa 15', '60-210', '456789012', 'maria.kowalczyk@example.com'),
+(5, 'Jakub', 'Zieliński', 'jakub.zielinski', 'password345', 'Gdańsk', 'ul. Wiatrakowa 8', '80-720', '567890123', 'jakub.zielinski@example.com'),
+(6, 'Katarzyna', 'Szymańska', 'katarzyna.szymanska', 'password678', 'Łódź', 'ul. Rewolucji 5', '90-123', '678901234', 'katarzyna.szymanska@example.com'),
+(7, 'Andrzej', 'Dąbrowski', 'andrzej.dabrowski', 'password901', 'Szczecin', 'ul. Polarna 2', '70-310', '789012345', 'andrzej.dabrowski@example.com'),
+(8, 'Beata', 'Kwiatkowska', 'beata.kwiatkowska', 'password234', 'Bydgoszcz', 'ul. Borówki 11', '85-123', '890123456', 'beata.kwiatkowska@example.com'),
+(9, 'Tomasz', 'Michałowski', 'tomasz.michalowski', 'password567', 'Katowice', 'ul. Jagodowa 18', '40-300', '901234567', 'tomasz.michalowski@example.com'),
+(10, 'Agata', 'Nowicka', 'agata.nowicka', 'password890', 'Lublin', 'ul. Zielna 25', '20-010', '012345678', 'agata.nowicka@example.com'),
+(11, 'Łukasz', 'Wojciechowski', 'lukasz.wojciechowski', 'password1234', 'Zielona Góra', 'ul. Dębowa 6', '65-500', '123987456', 'lukasz.wojciechowski@example.com'),
+(12, 'Ewa', 'Chmielewska', 'ewa.chmielewska', 'password2345', 'Rzeszów', 'ul. Lotosowa 17', '35-206', '234876567', 'ewa.chmielewska@example.com'),
+(13, 'Patryk', 'Lipski', 'patryk.lipski', 'password3456', 'Opole', 'ul. Jagodowa 3', '45-320', '345765678', 'patryk.lipski@example.com'),
+(14, 'Monika', 'Duda', 'monika.duda', 'password4567', 'Toruń', 'ul. Równa 22', '87-123', '456654789', 'monika.duda@example.com'),
+(15, 'Marek', 'Jankowski', 'marek.jankowski', 'password5678', 'Radom', 'ul. Miętowa 14', '26-600', '567543890', 'marek.jankowski@example.com'),
+(16, 'Joanna', 'Jabłońska', 'joanna.jablonska', 'password6789', 'Włocławek', 'ul. Sosnowa 5', '87-800', '678432901', 'joanna.jablonska@example.com'),
+(17, 'Grzegorz', 'Kaczmarek', 'grzegorz.kaczmarek', 'password7890', 'Kalisz', 'ul. Gorzysława 13', '62-800', '789321012', 'grzegorz.kaczmarek@example.com'),
+(18, 'Olga', 'Sikora', 'olga.sikora', 'password8901', 'Koszalin', 'ul. Gorzysława 9', '75-105', '890210123', 'olga.sikora@example.com'),
+(19, 'Rafał', 'Lewandowski', 'rafal.lewandowski', 'password9012', 'Tarnów', 'ul. Lipowa 26', '33-100', '901101234', 'rafal.lewandowski@example.com'),
+(20, 'Iwona', 'Kaczmarek', 'iwona.kaczmarek', 'password12345', 'Częstochowa', 'ul. Szkolna 12', '42-200', '012210345', 'iwona.kaczmarek@example.com'),
+(21, 'Sebastian', 'Malinowski', 'sebastian.malinowski', 'password23456', 'Świdnica', 'ul. Ogrodowa 4', '59-400', '123409876', 'sebastian.malinowski@example.com'),
+(22, 'Agnieszka', 'Zawisza', 'agnieszka.zawisza', 'password34567', 'Gorzów Wielkopolski', 'ul. Polna 19', '66-400', '234567890', 'agnieszka.zawisza@example.com'),
+(23, 'Jarosław', 'Kowalczyk', 'jaroslaw.kowalczyk', 'password45678', 'Piotrków Trybunalski', 'ul. Targowa 2', '97-300', '345698765', 'jaroslaw.kowalczyk@example.com'),
+(24, 'Radosław', 'Woźniak', 'radoslaw.wozniak', 'password56789', 'Wrocław', 'ul. Kwiatowa 13', '50-712', '456789876', 'radoslaw.wozniak@example.com'),
+(25, 'Paulina', 'Kwiatkowska', 'paulina.kwiatkowska', 'password67890', 'Częstochowa', 'ul. Słowiańska 8', '42-200', '567890987', 'paulina.kwiatkowska@example.com'),
+(26, 'Kamil', 'Adamski', 'kamil.adamski', 'password78901', 'Wrocław', 'ul. Leśna 7', '51-131', '678901098', 'kamil.adamski@example.com'),
+(27, 'Aneta', 'Marczak', 'aneta.marczak', 'password89012', 'Białystok', 'ul. Nowa 10', '15-001', '789012109', 'aneta.marczak@example.com'),
+(28, 'Mariusz', 'Sobolewski', 'mariusz.sobolewski', 'password90123', 'Radom', 'ul. Borówki 23', '26-100', '890123210', 'mariusz.sobolewski@example.com'),
+(29, 'Weronika', 'Kaczmarek', 'weronika.kaczmarek', 'password01234', 'Zielona Góra', 'ul. Polna 6', '65-400', '901234321', 'weronika.kaczmarek@example.com'),
+(30, 'Kamil', 'Szymański', 'kamil.szymanski', 'password12345', 'Gdańsk', 'ul. Parkowa 16', '80-108', '012345432', 'kamil.szymanski@example.com');
+
+
+-- Oddział Warszawa ul. Główna (id_oddzial = 1)
+-- 15 książek niedostępnych, pozostałe dostępne
+INSERT INTO Kopie (id_ksiazki, czy_dostepna, id_regal, id_oddzial) VALUES
+(1, 'N', 1, 1), (2, 'N', 2, 1), (3, 'N', 3, 1), (4, 'N', 4, 1), 
+(5, 'N', 5, 1), (6, 'N', 6, 1), (7, 'N', 7, 1), (8, 'N', 8, 1),
+(9, 'N', 9, 1), (10, 'N', 10, 1), (11, 'N', 11, 1), (12, 'N', 12, 1),
+(13, 'N', 13, 1), (14, 'N', 14, 1), (15, 'N', 15, 1),
+
+-- Dostępne książki w oddziale 1
+(16, 'T', 16, 1), (17, 'T', 17, 1), (18, 'T', 18, 1), (19, 'T', 19, 1),
+(20, 'T', 20, 1), (21, 'T', 21, 1), (22, 'T', 22, 1), (23, 'T', 23, 1),
+(24, 'T', 24, 1), (25, 'T', 25, 1), (26, 'T', 26, 1), (27, 'T', 27, 1),
+(28, 'T', 28, 1), (29, 'T', 29, 1), (30, 'T', 30, 1);
+
+-- Oddział Warszawa ul. Marszałkowska (id_oddzial = 2)
+-- 10 książek niedostępnych, pozostałe dostępne
+INSERT INTO Kopie (id_ksiazki, czy_dostepna, id_regal, id_oddzial) VALUES
+(16, 'N', 1, 2), (17, 'N', 2, 2), (18, 'N', 3, 2), (19, 'N', 4, 2),
+(20, 'N', 5, 2), (21, 'N', 6, 2), (22, 'N', 7, 2), (23, 'N', 8, 2),
+(24, 'N', 9, 2), (25, 'N', 10, 2),
+
+-- Dostępne książki w oddziale 2
+(1, 'T', 11, 2), (2, 'T', 12, 2), (3, 'T', 13, 2), (4, 'T', 14, 2),
+(5, 'T', 15, 2), (6, 'T', 16, 2), (7, 'T', 17, 2), (8, 'T', 18, 2),
+(9, 'T', 19, 2), (10, 'T', 20, 2), (11, 'T', 21, 2), (12, 'T', 22, 2),
+(13, 'T', 23, 2), (14, 'T', 24, 2), (15, 'T', 25, 2),
+(26, 'T', 26, 2), (27, 'T', 27, 2), (28, 'T', 28, 2), (29, 'T', 29, 2),
+(30, 'T', 30, 2);
+
+-- Oddział Kraków ul. Długa (id_oddzial = 3)
+-- 5 książek niedostępnych, pozostałe dostępne
+INSERT INTO Kopie (id_ksiazki, czy_dostepna, id_regal, id_oddzial) VALUES
+(26, 'N', 1, 3), (27, 'N', 2, 3), (28, 'N', 3, 3), (29, 'N', 4, 3), (30, 'N', 5, 3),
+
+-- Dostępne książki w oddziale 3
+(1, 'T', 6, 3), (2, 'T', 7, 3), (3, 'T', 8, 3), (4, 'T', 9, 3),
+(5, 'T', 10, 3), (6, 'T', 11, 3), (7, 'T', 12, 3), (8, 'T', 13, 3),
+(9, 'T', 14, 3), (10, 'T', 15, 3), (11, 'T', 16, 3), (12, 'T', 17, 3),
+(13, 'T', 18, 3), (14, 'T', 19, 3), (15, 'T', 20, 3),
+(16, 'T', 21, 3), (17, 'T', 22, 3), (18, 'T', 23, 3), (19, 'T', 24, 3),
+(20, 'T', 25, 3), (21, 'T', 26, 3), (22, 'T', 27, 3), (23, 'T', 28, 3),
+(24, 'T', 29, 3), (25, 'T', 30, 3);
+
+-- Oddział 4
+-- Każda książka po 1 egzemplarzu
+INSERT INTO Kopie (id_ksiazki, czy_dostepna, id_regal, id_oddzial) VALUES
+(1, 'T', 1, 4), (2, 'T', 2, 4), (3, 'T', 3, 4), (4, 'T', 4, 4),
+(5, 'T', 5, 4), (6, 'T', 6, 4), (7, 'T', 7, 4), (8, 'T', 8, 4),
+(9, 'T', 9, 4), (10, 'T', 10, 4), (11, 'T', 11, 4), (12, 'T', 12, 4),
+(13, 'T', 13, 4), (14, 'T', 14, 4), (15, 'T', 15, 4),
+(16, 'T', 16, 4), (17, 'T', 17, 4), (18, 'T', 18, 4), (19, 'T', 19, 4),
+(20, 'T', 20, 4), (21, 'T', 21, 4), (22, 'T', 22, 4), (23, 'T', 23, 4),
+(24, 'T', 24, 4), (25, 'T', 25, 4), (26, 'T', 26, 4), (27, 'T', 27, 4),
+(28, 'T', 28, 4), (29, 'T', 29, 4), (30, 'T', 30, 4);
+
+-- Oddział 5
+-- Każda książka po 1 egzemplarzu
+INSERT INTO Kopie (id_ksiazki, czy_dostepna, id_regal, id_oddzial) VALUES
+(1, 'T', 1, 5), (2, 'T', 2, 5), (3, 'T', 3, 5), (4, 'T', 4, 5),
+(5, 'T', 5, 5), (6, 'T', 6, 5), (7, 'T', 7, 5), (8, 'T', 8, 5),
+(9, 'T', 9, 5), (10, 'T', 10, 5), (11, 'T', 11, 5), (12, 'T', 12, 5),
+(13, 'T', 13, 5), (14, 'T', 14, 5), (15, 'T', 15, 5),
+(16, 'T', 16, 5), (17, 'T', 17, 5), (18, 'T', 18, 5), (19, 'T', 19, 5),
+(20, 'T', 20, 5), (21, 'T', 21, 5), (22, 'T', 22, 5), (23, 'T', 23, 5),
+(24, 'T', 24, 5), (25, 'T', 25, 5), (26, 'T', 26, 5), (27, 'T', 27, 5),
+(28, 'T', 28, 5), (29, 'T', 29, 5), (30, 'T', 30, 5);
+
+
+-- Wypożyczenia 10 książek już zwróconych (data_zwrotu w przyszłości)
+INSERT INTO Wypozyczenia (id_wypozyczenia, id_klienta, id_kopii, data_wypozyczenia, data_zwrotu, id_oddzial)
+VALUES
+(26, 1, 16, '2024-09-01', '2024-09-10', 1),
+(27, 2, 41, '2024-09-05', '2024-09-15', 2),
+(28, 3, 66, '2024-09-07', '2024-09-17', 3),
+(29, 4, 91, '2024-09-10', '2024-09-20', 4),
+(30, 5, 121, '2024-09-15', '2024-09-25', 5),
+(31, 6, 17, '2024-10-01', '2024-10-10', 1),
+(32, 7, 42, '2024-10-02', '2024-10-12', 2),
+(33, 8, 67, '2024-10-05', '2024-10-15', 3),
+(34, 9, 92, '2024-10-08', '2024-10-18', 4),
+(35, 10, 122, '2024-10-10', '2024-10-20', 5);
+
+-- Wypożyczenia 30 książek niezwróconych (data_zwrotu ustawiona na NULL)
+INSERT INTO Wypozyczenia (id_wypozyczenia, id_klienta, id_kopii, data_wypozyczenia, data_zwrotu, id_oddzial)
+VALUES
+(36, 11, 1, '2024-10-15', NULL, 1),
+(37, 12, 31, '2024-10-18', NULL, 2),
+(38, 13, 61, '2024-10-20', NULL, 3),
+(41, 16, 2, '2024-11-01', NULL, 1),
+(42, 17, 32, '2024-11-03', NULL, 2),
+(43, 18, 62, '2024-11-05', NULL, 3),
+(46, 21, 3, '2024-11-12', NULL, 1),
+(47, 22, 33, '2024-11-15', NULL, 2),
+(48, 23, 63, '2024-11-17', NULL, 3),
+(51, 26, 4, '2024-11-25', NULL, 1),
+(52, 27, 34, '2024-11-28', NULL, 2),
+(53, 28, 64, '2024-11-30', NULL, 3),
+(56, 1, 5, '2024-12-08', NULL, 1),
+(57, 2, 35, '2024-12-10', NULL, 2),
+(58, 3, 65, '2024-12-12', NULL, 3),
+(61, 6, 6, '2024-12-20', NULL, 1),
+(62, 7, 36, '2024-12-23', NULL, 2);
+
+
+SELECT setval(pg_get_serial_sequence ('czytelnicy', 'id_klienta'), (SELECT MAX(id_klienta) FROM czytelnicy));
+
+SELECT setval(pg_get_serial_sequence ('ksiazka', 'id_ksiazki'),(SELECT MAX(id_ksiazki) FROM ksiazka));
+SELECT setval(pg_get_serial_sequence ('autor', 'id_autora'),(SELECT MAX(id_autora) FROM autor));
+
+SELECT setval(pg_get_serial_sequence('pracownicy', 'id_pracownicy'), max(id_pracownicy)) FROM pracownicy;
+
+SELECT setval(pg_get_serial_sequence('wydawnictwo', 'id_wydawnictwa'), max(id_wydawnictwa)) FROM wydawnictwo;
+SELECT setval(pg_get_serial_sequence('gatunek', 'id_gatunku'), max(id_gatunku)) FROM gatunek;
+SELECT setval(pg_get_serial_sequence('oddzial', 'id_oddzial'), max(id_oddzial)) FROM oddzial;
+
+SELECT setval(pg_get_serial_sequence('kopie', 'id_kopii'), max(id_kopii)) FROM kopie;
+SELECT setval(pg_get_serial_sequence('regal', 'id_regal'), max(id_regal)) FROM regal;
+

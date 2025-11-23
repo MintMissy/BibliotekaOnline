@@ -1,0 +1,32 @@
+﻿@model TEST.Models.Ksiazka
+
+@{
+    ViewData["Title"] = "Usuń książkę";
+}
+
+<h2>Usuń książkę</h2>
+
+<div>
+    <h3>Czy na pewno chcesz usunąć książkę?</h3>
+    <h4>@Model.Tytul</h4>
+    <p>@Model.Autor?.Imie @Model.Autor?.Nazwisko</p>
+    <p>Rok wydania: @Model.RokWydania</p>
+    <p>Wydawnictwo: @Model.Wydawnictwo?.NazwaWydawnictwa</p>
+    <p>Gatunek: @Model.Gatunek?.NazwaGatunku</p>
+    @if (Model.Kopie != null && Model.Kopie.Any())
+    {
+        var pierwszaKopia = Model.Kopie.FirstOrDefault();
+        <p>Oddział: @pierwszaKopia?.Oddzial?.Adres, @pierwszaKopia?.Oddzial?.Miasto</p>
+    }
+    else
+    {
+        <p>Brak dostępnych kopii</p>
+    }
+
+    <form method="post" asp-action="Delete" asp-route-id="@Model.IdKsiazki">
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a href="@Url.Action("Index", "Ksiazka")" class="btn btn-secondary">Anuluj</a>
+    </form>
+</div>
+
+

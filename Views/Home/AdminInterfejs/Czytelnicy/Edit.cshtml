@@ -1,0 +1,76 @@
+﻿@model TEST.Models.Czytelnicy
+
+@{
+    ViewData["Title"] = "Edytuj czytelnika";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="EditCzytelnik" method="post">
+    <input type="hidden" name="IdKlienta" value="@Model.IdKlienta" />
+
+    <div class="form-group">
+        <label for="Imie">Imie</label>
+        <input type="text" id="Imie" name="Imie" class="form-control" value="@Model.Imie" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Nazwisko">Nazwisko</label>
+        <input type="text" id="Nazwisko" name="Nazwisko" class="form-control" value="@Model.Nazwisko" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Login">Login</label>
+        <input type="text" id="Login" name="Login" class="form-control" value="@Model.Login" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Haslo">Hasło</label>
+        <input type="password" id="Haslo" name="Haslo" class="form-control" value="@Model.Haslo" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Miasto">Miasto</label>
+        <input type="text" id="Miasto" name="Miasto" class="form-control" value="@Model.Miasto" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Adres">Adres</label>
+        <input type="text" id="Adres" name="Adres" class="form-control" value="@Model.Adres" required />
+    </div>
+
+    <div class="form-group">
+        <label for="NumerPocztowy">Numer pocztowy</label>
+        <input type="text" id="NumerPocztowy" name="NumerPocztowy" class="form-control" value="@Model.NumerPocztowy" required />
+    </div>
+
+    <div class="form-group">
+        <label for="NrTel">Numer telefonu</label>
+        <input type="text" id="NrTel" name="NrTel" class="form-control" value="@Model.NrTel" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="czytelnicy" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

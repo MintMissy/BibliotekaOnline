@@ -1,0 +1,25 @@
+﻿@model Kopie
+
+<h1>Usuwanie Kopii
+
+</h1>
+
+<form method="post" asp-action="Delete" asp-controller="Admin">
+    <input type="hidden" name="entity" value="@ViewData["Entity"]" />
+    <div class="form-group">
+        <label for="IdKopii">IdKopii</label>
+        <input type="text" id="IdKopii" class="form-control" value="@Model.IdKopii" disabled />
+    </div>
+
+    <div class="form-group">
+        <label for="KsiazkaTytul">Tytuł książki</label>
+        <input type="text" id="KsiazkaTytul" class="form-control" value="@Model.Ksiazka?.Tytul" disabled />
+    </div>
+
+
+    <div class="form-group">
+        <p>Jesteś pewny, że chcesz usunąć tą kopie? Usunięcie jej wiąże się z usunięciem każdej wartości posiadającą Kopie</p>
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a href="@Url.Action("Index", "Admin", new { entity = "Kopie" })" class="btn btn-secondary">Anuluj</a>
+    </div>
+</form>

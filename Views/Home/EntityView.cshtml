@@ -1,0 +1,204 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    var entityName = ViewData["Entity"]?.ToString() ?? "Entity";
+    var userRole = ViewBag.UserRole as string;
+}
+
+<h1>Lista @entityName</h1>
+
+@if (Model != null && Model.Any())
+{
+    @if (User.IsInRole("Administrator") && Model.First() is TEST.Models.Czytelnicy)
+    {
+        <a href="@Url.Action("AddCzytelnik", "Admin", new { entity = "czytelnicy" })" class="btn btn-success">Dodaj nowy</a>
+    }
+
+    @if ((User.IsInRole("Bibliotekarz") || User.IsInRole("Administrator")) && Model.First() is TEST.Models.Kopie)
+    {
+        <a href="@Url.Action("AddKopie", "Admin", new { entity = "kopie" })" class="btn btn-success">Dodaj nowy</a>
+    }
+
+     @if (User.IsInRole("Administrator") && Model.First() is TEST.Models.Autor)
+    {
+        <a href="@Url.Action("AddAutor", "Admin", new { entity = "autor" })" class="btn btn-success">Dodaj nowy</a>
+    }
+
+     @if (User.IsInRole("Administrator") && Model.First() is TEST.Models.Gatunek)
+    {
+        <a href="@Url.Action("AddGatunek", "Admin", new { entity = "gatunek" })" class="btn btn-success">Dodaj nowy</a>
+    }
+
+    @if (User.IsInRole("Administrator") && Model.First() is TEST.Models.Wydawnictwo)
+    {
+        <a href="@Url.Action("AddWydawnictwo", "Admin", new { entity = "wydawnictwo" })" class="btn btn-success">Dodaj nowy</a>
+    }
+
+    @if (User.IsInRole("Administrator") && Model.First() is TEST.Models.Pracownicy)
+    {
+        <a href="@Url.Action("AddPracownik", "Admin", new { entity = "pracownicy" })" class="btn btn-success">Dodaj nowy</a>
+    }
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                @if (Model.First() is TEST.Models.Czytelnicy)
+                {
+                    <th>Pełne imię i nazwisko</th>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <th>Login</th>
+                        <th>Miasto</th>
+                        <th>Adres</th>
+                        <th>Numer pocztowy</th>
+                    }
+                    <th>Nr telefonu</th>
+                    <th>Email</th>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <th>Akcje</th>
+                    }
+                }
+                @if (User.IsInRole("Administrator"))
+                {
+                    @if (Model.First() is TEST.Models.Autor)
+                    {
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>Data urodzenia</th>
+                        <th>Akcje</th>
+                    }
+                    @if (Model.First() is TEST.Models.Gatunek)
+                    {
+                        <th>Nazwa gatunku</th>
+                        <th>Akcje</th>
+                    }
+                    @if (Model.First() is TEST.Models.Wydawnictwo)
+                    {
+                        <th>Nazwa wydawnictwa</th>
+                        <th>Siedziba</th>
+                        <th>Data założenia</th>
+                        <th>Akcje</th>
+                    }
+                    @if (Model.First() is TEST.Models.Pracownicy)
+                    {
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>Login</th>
+                        <th>Stanowisko</th>
+                        <th>Oddział</th>
+                        <th>Akcje</th>
+                    }
+                    @if (Model.First() is TEST.Models.Kopie)
+                    {
+                        <th>Tytuł książki</th>
+                        <th>Dostępność</th>
+                        <th>Piętro i Numer Regału</th>
+                        <th>Oddzial</th>
+                        <th>Akcje</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item is TEST.Models.Czytelnicy czytelnik)
+                {
+                    <tr>
+                        <td>@czytelnik.PełneImieNazwisko</td>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <td>@czytelnik.Login</td>
+                            <td>@czytelnik.Miasto</td>
+                            <td>@czytelnik.Adres</td>
+                            <td>@czytelnik.NumerPocztowy</td>
+                        }
+                        <td>@czytelnik.NrTel</td>
+                        <td>@czytelnik.Email</td>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <td>
+                                <a href="@Url.Action("EditCzytelnik", "Admin", new { entity = "czytelnicy", id = czytelnik.IdKlienta })" class="btn btn-primary">Edytuj</a>
+                                <a href="@Url.Action("Delete", "Admin", new { entity = "czytelnicy", id = czytelnik.IdKlienta })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                            </td>
+                        }
+                    </tr>
+                }
+                @if (User.IsInRole("Administrator"))
+                {
+                    @if (item is TEST.Models.Autor autor)
+                    {
+                        <tr>
+                            <td>@autor.Imie</td>
+                            <td>@autor.Nazwisko</td>
+                            <td>@autor.DataUrodzenia.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("EditAutor", "Admin", new { entity = "autor", id = autor.IdAutora })" class="btn btn-primary">Edytuj</a>
+                                <a href="@Url.Action("Delete", "Admin", new { entity = "autor", id = autor.IdAutora })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                            </td>
+                        </tr>
+                    }
+                    @if (item is TEST.Models.Gatunek gatunek)
+                    {
+                        <tr>
+                            <td>@gatunek.NazwaGatunku</td>
+                            <td>
+                                <a href="@Url.Action("EditGatunek", "Admin", new { entity = "gatunek", id = gatunek.IdGatunku })" class="btn btn-primary">Edytuj</a>
+                                <a href="@Url.Action("Delete", "Admin", new { entity = "gatunek", id = gatunek.IdGatunku })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                            </td>
+                        </tr>
+                    }
+                    @if (item is TEST.Models.Wydawnictwo wydawnictwo)
+                    {
+                        <tr>
+                            <td>@wydawnictwo.NazwaWydawnictwa</td>
+                            <td>@wydawnictwo.Siedziba</td>
+                            <td>@wydawnictwo.DataZalozenia.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("EditWydawnictwo", "Admin", new { entity = "wydawnictwo", id = wydawnictwo.IdWydawnictwa })" class="btn btn-primary">Edytuj</a>
+                                <a href="@Url.Action("Delete", "Admin", new { entity = "wydawnictwo", id = wydawnictwo.IdWydawnictwa })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                            </td>
+                        </tr>
+                    }
+                    @if (item is TEST.Models.Pracownicy pracownik)
+                    {
+                        <tr>
+                            <td>@pracownik.Imie</td>
+                            <td>@pracownik.Nazwisko</td>
+                            <td>@pracownik.Login</td>
+                            <td>@pracownik.Stanowisko</td>
+                            <td>@pracownik.Oddzial?.Miasto, @pracownik.Oddzial?.Adres</td>
+                            <td>
+                                <a href="@Url.Action("EditPracownik", "Admin", new { entity = "pracownicy", id = pracownik.IdPracownicy })" class="btn btn-primary">Edytuj</a>
+                                <a href="@Url.Action("Delete", "Admin", new { entity = "pracownicy", id = pracownik.IdPracownicy })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                            </td>
+                        </tr>
+                    }
+                    
+                }
+                    @if (item is TEST.Models.Kopie Kopie)
+                    {
+                        <tr>
+                            <td>@Kopie.Ksiazka?.Tytul</td>
+                            <td>@(Kopie.CzyDostepna == 'T' ? "Dostępna" : "Niedostępna")</td>
+                            <td>@Kopie.Regal?.Pietro, @Kopie.Regal?.NrRegalu</td>
+                            <td>@Kopie.Oddzial?.Miasto, @Kopie.Oddzial?.Adres</td>
+                            <td>
+                                <a href="@Url.Action("EditKopie", "Admin", new { entity = "Kopie", id = Kopie.IdKopii })" class="btn btn-primary">Edytuj</a>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a href="@Url.Action("Delete", "Admin", new { entity = "Kopie", id = Kopie.IdKopii })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                            }
+                            </td>
+                        </tr>
+                    }
+                
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>Brak danych do wyświetlenia.</div>
+}

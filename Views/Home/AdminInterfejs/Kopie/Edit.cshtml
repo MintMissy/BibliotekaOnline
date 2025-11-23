@@ -1,0 +1,53 @@
+﻿@model TEST.Models.Kopie
+
+@{
+    ViewData["Title"] = "Edytuj Kopię";
+}
+
+<h2>@ViewData["Title"]</h2>
+<form asp-action="EditKopie" method="post">
+    <input type="hidden" asp-for="IdKopii" />
+
+    <div class="form-group">
+        <label asp-for="IdKsiazki">Ksiazka</label>
+        <select asp-for="IdKsiazki" class="form-control" asp-items="ViewBag.Ksiazki" readonly>
+            <option value="">-- Wybierz książkę --</option>
+        </select>
+        <span asp-validation-for="IdKsiazki" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Oddzial.MiastoAdres">Oddzial</label>
+        <input asp-for="Oddzial.MiastoAdres" class="form-control" readonly />
+        <span asp-validation-for="Oddzial.MiastoAdres" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="IdRegal" class="control-label">Zmień Lokalizację</label>
+        <select asp-for="IdRegal" class="form-control" asp-items="ViewBag.RegalyIOddzialy">
+            <option value="">-- Wybierz lokalizację --</option>
+        </select>
+        <span asp-validation-for="IdRegal" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz Zmiany</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="Kopie" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

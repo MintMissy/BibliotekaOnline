@@ -1,0 +1,42 @@
+﻿@model TEST.Models.Autor
+
+<h1>Dodaj nowego autora</h1>
+
+<form asp-action="AddAutor" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="entity" value="autor" />
+    <div>
+        <label for="Imie">Imie</label>
+        <input asp-for="Imie" class="form-control" />
+        <span asp-validation-for="Imie" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Nazwisko">Nazwisko</label>
+        <input asp-for="Nazwisko" class="form-control" />
+        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="DataUrodzenia">Data Urodzenia</label>
+        <input asp-for="DataUrodzenia" class="form-control" type="date" />
+        <span asp-validation-for="DataUrodzenia" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="autor" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

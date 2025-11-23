@@ -1,0 +1,46 @@
+﻿@model TEST.Models.Oddzial
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="AddOddzialRegal" asp-controller="Admin">
+    <input type="hidden" name="entity" value="oddzial" />
+
+
+    <fieldset>
+        <legend>Dodaj Oddział</legend>
+        <div class="form-group">
+            <label for="Miasto">Miasto</label>
+            <input id="Miasto" name="Miasto" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Adres">Adres</label>
+            <input id="Adres" name="Adres" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="KodPocztowy">Kod Pocztowy</label>
+            <input id="KodPocztowy" name="KodPocztowy" class="form-control" required />
+        </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-success">Dodaj Oddział</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="OddzialRegal" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

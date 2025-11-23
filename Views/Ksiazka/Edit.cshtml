@@ -1,0 +1,86 @@
+﻿@model TEST.Models.Ksiazka
+
+@{
+    ViewData["Title"] = "Edytuj książkę";
+    var selectedBranchId = ViewBag.SelectedBranchId ?? 0;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="IdKsiazki" value="@Model.IdKsiazki" />
+
+    <div class="form-group">
+        <label for="Tytul">Tytuł</label>
+        <input asp-for="Tytul" class="form-control" placeholder="Wprowadź tytuł książki" required />
+        <span asp-validation-for="Tytul" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="RokWydania">Rok wydania</label>
+        <input asp-for="RokWydania" class="form-control" placeholder="Wprowadź rok wydania" required />
+        <span asp-validation-for="RokWydania" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="LiczbaStron">Liczba stron</label>
+        <input asp-for="LiczbaStron" class="form-control" placeholder="Wprowadź liczbę stron" required />
+        <span asp-validation-for="LiczbaStron" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="IdWydawnictwa">Wydawnictwo</label>
+        <select asp-for="IdWydawnictwa" class="form-control">
+            <option value="">Wybierz wydawnictwo</option>
+            @if (ViewBag.Publishers != null)
+            {
+                foreach (var publisher in ViewBag.Publishers)
+                {
+                    <option value="@publisher.IdWydawnictwa" selected="@(publisher.IdWydawnictwa == Model.IdWydawnictwa ? "selected" : "")">
+                        @publisher.NazwaWydawnictwa
+                    </option>
+                }
+            }
+        </select>
+        <span asp-validation-for="IdWydawnictwa" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="IdGatunku">Gatunek</label>
+        <select asp-for="IdGatunku" class="form-control">
+            <option value="">Wybierz gatunek</option>
+            @foreach (var genre in ViewBag.Genres)
+            {
+                <option value="@genre.IdGatunku" selected="@(genre.IdGatunku == Model.IdGatunku ? "selected" : "")">
+                    @genre.NazwaGatunku
+                </option>
+            }
+        </select>
+        <span asp-validation-for="IdGatunku" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Autor">Autor</label>
+        <select asp-for="IdAutora" class="form-control" required>
+            <option value="">Wybierz autora</option>
+            @foreach (var author in ViewBag.Authors)
+            {
+                <option value="@author.IdAutora" selected="@(author.IdAutora == Model.IdAutora ? "selected" : "")">
+                    @author.Imie @author.Nazwisko
+                </option>
+            }
+        </select>
+        <span asp-validation-for="IdAutora" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+</form>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

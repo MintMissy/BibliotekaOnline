@@ -1,0 +1,33 @@
+﻿@model TEST.Models.Czytelnicy
+
+<h1>Usuwanie Czytelnika</h1>
+
+<form method="post" asp-action="Delete" asp-controller="Admin">
+    <input type="hidden" name="entity" value="@ViewData["Entity"]" />
+    <div class="form-group">
+        <label for="PełneImieNazwisko">Pełne Imię i Nazwisko</label>
+        <input type="text" id="PełneImieNazwisko" class="form-control" value="@Model.PełneImieNazwisko" disabled />
+    </div>
+    <div class="form-group">
+        <label for="Login">Login</label>
+        <input type="text" id="Login" class="form-control" value="@Model.Login" disabled />
+    </div>
+    <div class="form-group">
+        <label for="Adres">Adres</label>
+        <input type="text" id="Adres" class="form-control" value="@Model.Adres" disabled />
+    </div>
+    <div class="form-group">
+        <label for="Miasto">Miasto</label>
+        <input type="text" id="Miasto" class="form-control" value="@Model.Miasto" disabled />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" class="form-control" value="@Model.Email" disabled />
+    </div>
+
+    <div class="form-group">
+        <p>Jesteś pewny, że chcesz usunąć tego czytelnika? Usunięcie go wiąże się z usunięciem każdej wartości posiadającą tego Czytelnika</p>
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a href="@Url.Action("Index", "Admin", new { entity = "czytelnicy" })" class="btn btn-secondary">Anuluj</a>
+    </div>
+</form>

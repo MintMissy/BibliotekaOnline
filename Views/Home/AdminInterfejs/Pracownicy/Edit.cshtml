@@ -1,0 +1,62 @@
+﻿@model TEST.Models.Pracownicy
+
+
+@{
+    ViewData["Title"] = "Edytuj Pracownika";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="EditPracownik" method="post">
+    <input type="hidden" name="IdPracownicy" value="@Model.IdPracownicy" />
+
+    <div class="form-group">
+        <label asp-for="Imie">Imie</label>
+        <input asp-for="Imie" class="form-control" required />
+        <span asp-validation-for="Imie" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Nazwisko">Nazwisko</label>
+        <input asp-for="Nazwisko" class="form-control" required />
+        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Login">Login</label>
+        <input asp-for="Login" class="form-control" required />
+        <span asp-validation-for="Login" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+    <label for="Haslo">Hasło</label>
+    <input type="password" id="Haslo" name="Haslo" class="form-control" value="@Model.Haslo" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Stanowisko">Stanowisko</label>
+        <input asp-for="Stanowisko" class="form-control" required />
+        <span asp-validation-for="Stanowisko" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="pracownicy" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,37 @@
+﻿@model Gatunek
+
+@{
+    ViewData["Title"] = "Edytuj Gatunek";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="EditGatunek" method="post">
+    <input type="hidden" name="IdGatunku" value="@Model.IdGatunku" />
+
+    <div class="form-group">
+        <label asp-for="NazwaGatunku" class="control-label"></label>
+        <input asp-for="NazwaGatunku" class="form-control" />
+        <span asp-validation-for="NazwaGatunku" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="gatunek" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

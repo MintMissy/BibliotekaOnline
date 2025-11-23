@@ -1,0 +1,47 @@
+﻿@model TEST.Models.Wydawnictwo
+
+<h1>Edytuj Wydawnictwo</h1>
+
+<form asp-action="EditWydawnictwo" method="post">
+    <input type="hidden" name="IdWydawnictwa" value="@Model.IdWydawnictwa" />
+
+    <div class="form-group">
+        <label asp-for="NazwaWydawnictwa">Nazwa Wydawnictwa</label>
+        <input asp-for="NazwaWydawnictwa" class="form-control" />
+        <span asp-validation-for="NazwaWydawnictwa" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Siedziba">Siedziba</label>
+        <input asp-for="Siedziba" class="form-control" />
+        <span asp-validation-for="Siedziba" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataZalozenia">Data Założenia</label>
+        <input asp-for="DataZalozenia" class="form-control" type="date" />
+        <span asp-validation-for="DataZalozenia" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="wydawnictwo" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

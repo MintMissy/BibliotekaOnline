@@ -1,0 +1,80 @@
+﻿@model TEST.Models.EditAccountViewModel
+
+@{
+    ViewData["Title"] = "Edytuj Konto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        <label for="Imie">Imię</label>
+        @Html.EditorFor(model => model.Imie, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Imie, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="Nazwisko">Nazwisko</label>
+        @Html.EditorFor(model => model.Nazwisko, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Nazwisko, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="Miasto">Miasto</label>
+        @Html.EditorFor(model => model.Miasto, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Miasto, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="Adres">Adres</label>
+        @Html.EditorFor(model => model.Adres, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Adres, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="NumerPocztowy">Numer Pocztowy</label>
+        @Html.EditorFor(model => model.NumerPocztowy, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NumerPocztowy, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="NrTel">Numer Telefonu</label>
+        @Html.EditorFor(model => model.NrTel, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NrTel, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="Email">E-mail</label>
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="NoweHaslo">Nowe Hasło</label>
+        @Html.EditorFor(model => model.NoweHaslo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NoweHaslo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="PotwierdzenieHasla">Potwierdzenie Nowego Hasła</label>
+        @Html.EditorFor(model => model.PotwierdzenieHasla, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PotwierdzenieHasla, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Zapisz zmiany</button>
+
+    @{
+        var successMessage = TempData["SuccessMessage"] as string;
+        var errorMessage = TempData["ErrorMessage"] as string;
+    }
+
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="alert alert-success">
+            @successMessage
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger">
+            @errorMessage
+        </div>
+    }
+</form>

@@ -1,0 +1,51 @@
+﻿@model TEST.Models.Autor
+@using TEST.Models
+
+@{
+    ViewData["Title"] = "Edytuj autora";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="EditAutor" method="post">
+    <input type="hidden" name="IdAutora" value="@Model.IdAutora" />
+
+     <div class="form-group">
+        <label for="Imie">Imie autora</label>
+        <input asp-for="Imie" class="form-control" placeholder="Wprowadź imię autora" required />
+        <span asp-validation-for="Imie" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Nazwisko">Nazwisko autora</label>
+        <input asp-for="Nazwisko" class="form-control" placeholder="Wprowadź nazwisko autora" required />
+        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="DataUrodzenia">Data urodzenia</label>
+        <input asp-for="DataUrodzenia" class="form-control" type="date" required />
+        <span asp-validation-for="DataUrodzenia" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+</form>
+
+    <div>
+    <a asp-action="Index" asp-route-entity="autor" class="btn btn-secondary">Powrót</a>
+    </div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

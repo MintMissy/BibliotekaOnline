@@ -1,0 +1,50 @@
+﻿@model TEST.Models.OddzialRegalViewModel
+
+<h1>Oddziały i Regały</h1>
+
+@if (Model != null)
+{
+    
+    <a href="@Url.Action("DodajRegalPietro", "Admin")" class="btn btn-primary">Dodaj Regał</a>
+    
+    <a href="@Url.Action("AddOddzialRegal", "Admin")" class="btn btn-success">Dodaj nowy oddział</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Miasto Oddziału</th>
+                <th>Adres Oddziału</th>
+                <th>Kod Pocztowy</th>
+                <th>Regały</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var oddzial in Model.Oddzial)
+            {
+                <tr>
+                    <td>@oddzial.Miasto</td>
+                    <td>@oddzial.Adres</td>
+                    <td>@oddzial.KodPocztowy</td>
+                    <td>
+                        @foreach (var regal in Model.Regal.Where(r => r.IdOddzial == oddzial.IdOddzial))
+                        {
+                            <div>
+                                Regał Nr: @regal.NrRegalu - Pietro: @regal.Pietro
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("EditOddzialRegal", "Admin", new { id = oddzial.IdOddzial })" class="btn btn-primary">Edytuj</a>
+                        <a href="@Url.Action("Delete", "Admin", new { entity = "oddzialregal", id = oddzial.IdOddzial })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć?');">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+
+}
+else
+{
+    <div>Brak danych do wyświetlenia.</div>
+}

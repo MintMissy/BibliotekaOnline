@@ -1,0 +1,58 @@
+﻿@model TEST.Models.Regal
+
+@{
+    ViewData["Title"] = "Dodaj Regał i Piętro do Oddziału";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="DodajRegalPietro" asp-controller="Admin">
+    <input type="hidden" name="entity" value="regal" />
+
+    <fieldset>
+        <div class="form-group">
+            <label for="IdOddzial">Wybierz Oddział</label>
+            <select asp-for="IdOddzial" asp-items="ViewBag.Oddzialy" class="form-control">
+                <option value="">-- Wybierz oddział --</option>
+            </select>
+            <span asp-validation-for="IdOddzial" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="NrRegalu">Nr Regalu</label>
+            <input asp-for="NrRegalu" class="form-control" />
+            <span asp-validation-for="NrRegalu" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Pietro">Piętro</label>
+            <input asp-for="Pietro" class="form-control" />
+            <span asp-validation-for="Pietro" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label for="IdGatunku">Wybierz Gatunek</label>
+            <select asp-for="IdGatunku" asp-items="ViewBag.Gatunek" class="form-control">
+                <option value="">-- Wybierz Gatunek --</option>
+            </select>
+            <span asp-validation-for="IdGatunku" class="text-danger"></span>
+        </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-success">Dodaj Regał i Piętro</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="OddzialRegal" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}

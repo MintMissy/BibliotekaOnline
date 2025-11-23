@@ -1,0 +1,189 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = TEST
+build_property.RootNamespace = TEST
+build_property.ProjectDir = /Users/dawidkostka/RiderProjects/BibliotekaOnline/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /Users/dawidkostka/RiderProjects/BibliotekaOnline
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 6.0
+build_property.EnableCodeStyleSeverity = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Account/EditAccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9FZGl0QWNjb3VudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Autor/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9BdXRvci9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Autor/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9BdXRvci9Eb2Rhd2FuaWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Autor/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9BdXRvci9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Czytelnicy/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9Denl0ZWxuaWN5L0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Czytelnicy/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9Denl0ZWxuaWN5L0RvZGF3YW5pZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Czytelnicy/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9Denl0ZWxuaWN5L0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Gatunek/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9HYXR1bmVrL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Gatunek/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9HYXR1bmVrL0RvZGF3YW5pZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Gatunek/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9HYXR1bmVrL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Kopie/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9Lb3BpZS9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Kopie/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9Lb3BpZS9Eb2Rhd2FuaWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Kopie/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9Lb3BpZS9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/OddzialRegal/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9PZGR6aWFsUmVnYWwvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/OddzialRegal/DodajRegalPietro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9PZGR6aWFsUmVnYWwvRG9kYWpSZWdhbFBpZXRyby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/OddzialRegal/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9PZGR6aWFsUmVnYWwvRG9kYXdhbmllLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/OddzialRegal/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9PZGR6aWFsUmVnYWwvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Pracownicy/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9QcmFjb3duaWN5L0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Pracownicy/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9QcmFjb3duaWN5L0RvZGF3YW5pZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Pracownicy/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9QcmFjb3duaWN5L0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Wydawnictwo/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9XeWRhd25pY3R3by9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Wydawnictwo/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9XeWRhd25pY3R3by9Eb2Rhd2FuaWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/Wydawnictwo/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9XeWRhd25pY3R3by9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/WypozyczeniaKopie/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9XeXBvenljemVuaWFLb3BpZS9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/AdminInterfejs/WypozyczeniaKopie/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG1pbkludGVyZmVqcy9XeXBvenljemVuaWFLb3BpZS9Eb2Rhd2FuaWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/EditReturnDate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9FZGl0UmV0dXJuRGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/EntityView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9FbnRpdHlWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/OddzialRegal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9PZGR6aWFsUmVnYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Home/WypozyczeniaKopie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9XeXBvenljemVuaWFLb3BpZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Ksiazka/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvS3NpYXprYS9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Ksiazka/Dodawanie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvS3NpYXprYS9Eb2Rhd2FuaWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Ksiazka/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvS3NpYXprYS9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Ksiazka/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvS3NpYXprYS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Ksiazka/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvS3NpYXprYS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/dawidkostka/RiderProjects/BibliotekaOnline/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-4rn97itcw9

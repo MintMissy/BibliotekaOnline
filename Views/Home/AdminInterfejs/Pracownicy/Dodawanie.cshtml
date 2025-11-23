@@ -1,0 +1,77 @@
+﻿@model TEST.Models.Pracownicy
+
+@{
+    ViewData["Title"] = "Dodaj Pracownika";
+}
+
+<h2>Dodaj Pracownika</h2>
+
+
+<form asp-action="AddPracownik" method="post">
+    <input type="hidden" name="entity" value="pracownicy" />
+
+    <div class="form-group">
+        <label asp-for="Imie">Imie</label>
+        <input asp-for="Imie" class="form-control" />
+        <span asp-validation-for="Imie" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Nazwisko">Nazwisko</label>
+        <input asp-for="Nazwisko" class="form-control" />
+        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Login">Login</label>
+        <input asp-for="Login" class="form-control" />
+        <span asp-validation-for="Login" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Haslo">Hasło</label>
+        <input asp-for="Haslo" class="form-control" type="password" />
+        <span asp-validation-for="Haslo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Stanowisko">Stanowisko</label>
+        <input asp-for="Stanowisko" class="form-control" />
+        <span asp-validation-for="Stanowisko" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="IdOddzial">Oddział</label>
+        <select id="IdOddzial" name="IdOddzial" class="form-control">
+            @if (ViewBag.Oddzialy != null)
+            {
+                @foreach (var oddzial in ViewBag.Oddzialy)
+                {
+                    <option value="@oddzial.IdOddzial">@oddzial.Miasto - @oddzial.Adres</option>
+                }
+            }
+            else
+            {
+                <option disabled>Brak dostępnych oddziałów</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Dodaj</button>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-entity="pracownicy" class="btn btn-secondary">Powrót</a>
+</div>
+
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

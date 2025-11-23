@@ -1,0 +1,30 @@
+﻿@model TEST.Models.Wypozyczenia
+@using TEST.Models
+
+<h1>Usuwanie Wypożyczenia</h1>
+
+<form method="post" asp-action="Delete" asp-controller="Admin">
+    <input type="hidden" name="entity" value="@ViewData["Entity"]" />
+    <div class="form-group">
+        <label>Klient</label>
+        <input type="text" class="form-control" value="@Model.Czytelnicy?.Imie @Model.Czytelnicy?.Nazwisko" disabled />
+    </div>
+    <div class="form-group">
+        <label>Książka</label>
+        <input type="text" class="form-control" value="@Model.Kopie?.Ksiazka?.Tytul" disabled />
+    </div>
+    <div class="form-group">
+        <label>Data Wypożyczenia</label>
+        <input type="text" class="form-control" value="@Model.DataWypozyczenia.ToShortDateString()" disabled />
+    </div>
+    <div class="form-group">
+        <label>Data Zwrotu</label>
+        <input type="text" class="form-control" value="@Model.DataZwrotu?.ToShortDateString()  " Brak zwrotu"" disabled />
+    </div>
+
+    <div class="form-group">
+        <p>Jesteś pewny, że chcesz usunąć to wypożyczenie?</p>
+        <button type="submit" class="btn btn-danger">Usuń</button>
+        <a href="@Url.Action("Index", "Admin", new { entity = "wypozyczeniakopie" })" class="btn btn-secondary">Anuluj</a>
+    </div>
+</form>

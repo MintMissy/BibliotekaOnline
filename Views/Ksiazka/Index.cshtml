@@ -1,0 +1,202 @@
+﻿@model IEnumerable<TEST.Models.Ksiazka>
+
+@{
+    ViewData["Title"] = "Książki";
+}
+
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        .container-main {
+            display: flex;
+            gap: 20px;
+        }
+
+        .filter-section {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .table-section {
+            flex: 3;
+        }
+
+        .auth-section {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-section">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p>Jesteś zalogowany jako @User.Identity.Name.</p>
+        }
+        else
+        {
+            <a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-sm">Zaloguj się</a>
+            <a href="@Url.Action("Register", "Account")" class="btn btn-secondary btn-sm">Zarejestruj się</a>
+        }
+    </div>
+
+    <div class="container mt-5">
+        <h2>@ViewData["Title"]</h2>
+
+        <div class="container-main">
+            <!-- Sekcja filtrowania -->
+            <div class="filter-section">
+                <form method="get">
+                    <!-- Pole wyszukiwania -->
+                    <div class="form-group mb-3">
+                        <input type="text" name="searchString" value="@Context.Request.Query["searchString"]"
+                               class="form-control" placeholder="Szukaj książek..." />
+                    </div>
+
+                    <!-- Filtr Rok wydania -->
+                    <div class="form-group mb-3">
+                        <label for="yearFilter">Rok wydania:</label>
+                        <input type="number" id="yearFilter" name="yearFilter" class="form-control"
+                               value="@ViewData["YearFilter"]" placeholder="Rok wydania" />
+                    </div>
+
+                    <!-- Filtr Wydawnictwo -->
+                    <div class="form-group mb-3">
+                        <label>Wydawnictwo:</label>
+                        @foreach (var publisher in ViewBag.Publishers)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="publishers"
+                                       value="@publisher.IdWydawnictwa"
+                                @(ViewData["SelectedPublishers"] != null &&
+                                    ((List<int>)ViewData["SelectedPublishers"]).Contains(publisher.IdWydawnictwa)
+                                    ? "checked" : "") />
+                                <label class="form-check-label">@publisher.NazwaWydawnictwa</label>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Filtr Oddział -->
+                    <div class="form-group mb-3">
+                        <label>Oddział (Adres i Miasto):</label>
+                        @foreach (var branch in ViewBag.Branches)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="branches"
+                                       value="@branch.IdOddzial"
+                                @(ViewData["SelectedBranches"] != null &&
+                                    ((List<int>)ViewData["SelectedBranches"]).Contains(branch.IdOddzial)
+                                    ? "checked" : "") />
+                                <label class="form-check-label">@branch.Adres, @branch.Miasto</label>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Filtr Gatunek -->
+                    <div class="form-group mb-3">
+                        <label>Gatunek:</label>
+                        @foreach (var genre in ViewBag.Genres)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="genres"
+                                       value="@genre.IdGatunku"
+                                @(ViewData["SelectedGenres"] != null &&
+                                    ((List<int>)ViewData["SelectedGenres"]).Contains(genre.IdGatunku)
+                                    ? "checked" : "") />
+                                <label class="form-check-label">@genre.NazwaGatunku</label>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Przyciski -->
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-primary">Filtruj</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Prawa kolumna - Tabela książek -->
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="?sortOrder=@(ViewData["TitleSort"])&searchString=@Context.Request.Query["searchString"]&yearFilter=@ViewData["YearFilter"]&publishers=@string.Join(",", (List<int>)(ViewData["SelectedPublishers"] ?? new List<int>()))&branches=@string.Join(",", (List<int>)(ViewData["SelectedBranches"] ?? new List<int>()))&genres=@string.Join(",", (List<int>)(ViewData["SelectedGenres"] ?? new List<int>()))">Tytuł</a>
+                            </th>
+                            <th>
+                                <a href="?sortOrder=@(ViewData["AuthorSort"])&searchString=@Context.Request.Query["searchString"]&yearFilter=@ViewData["YearFilter"]&publishers=@string.Join(",", (List<int>)(ViewData["SelectedPublishers"] ?? new List<int>()))&branches=@string.Join(",", (List<int>)(ViewData["SelectedBranches"] ?? new List<int>()))&genres=@string.Join(",", (List<int>)(ViewData["SelectedGenres"] ?? new List<int>()))">Autor</a>
+                            </th>
+                            <th>
+                                <a href="?sortOrder=@(ViewData["YearSort"])&searchString=@Context.Request.Query["searchString"]&yearFilter=@ViewData["YearFilter"]&publishers=@string.Join(",", (List<int>)(ViewData["SelectedPublishers"] ?? new List<int>()))&branches=@string.Join(",", (List<int>)(ViewData["SelectedBranches"] ?? new List<int>()))&genres=@string.Join(",", (List<int>)(ViewData["SelectedGenres"] ?? new List<int>()))">Rok wydania</a>
+                            </th>
+                            <th>
+                                <a href="?sortOrder=@(ViewData["PublisherSort"])&searchString=@Context.Request.Query["searchString"]&yearFilter=@ViewData["YearFilter"]&publishers=@string.Join(",", (List<int>)(ViewData["SelectedPublishers"] ?? new List<int>()))&branches=@string.Join(",", (List<int>)(ViewData["SelectedBranches"] ?? new List<int>()))&genres=@string.Join(",", (List<int>)(ViewData["SelectedGenres"] ?? new List<int>()))">Wydawnictwo</a>
+                            </th>
+                            <th>
+                                <a href="?sortOrder=@(ViewData["BranchSort"])&searchString=@Context.Request.Query["searchString"]&yearFilter=@ViewData["YearFilter"]&publishers=@string.Join(",", (List<int>)(ViewData["SelectedPublishers"] ?? new List<int>()))&branches=@string.Join(",", (List<int>)(ViewData["SelectedBranches"] ?? new List<int>()))&genres=@string.Join(",", (List<int>)(ViewData["SelectedGenres"] ?? new List<int>()))">Oddział (Adres i Miasto)</a>
+                            </th>
+                            <th>
+                                <a href="?sortOrder=@(ViewData["GenreSort"])&searchString=@Context.Request.Query["searchString"]&yearFilter=@ViewData["YearFilter"]&publishers=@string.Join(",", (List<int>)(ViewData["SelectedPublishers"] ?? new List<int>()))&branches=@string.Join(",", (List<int>)(ViewData["SelectedBranches"] ?? new List<int>()))&genres=@string.Join(",", (List<int>)(ViewData["SelectedGenres"] ?? new List<int>()))">Gatunek</a>
+                            </th>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <th>Akcje</th>
+                            }
+                        </tr>
+                    </thead>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Bibliotekarz"))
+                    {
+                        <a href="@Url.Action("Dodawanie", "Ksiazka")" class="btn btn-primary">Dodaj książkę</a>
+                    }
+                    <tbody>
+                        @foreach (var ksiazka in Model)
+                        {
+                            <tr>
+                                <td>@ksiazka.Tytul</td>
+                                <td>@ksiazka.Autor?.Imie @ksiazka.Autor?.Nazwisko</td>
+                                <td>@ksiazka.RokWydania</td>
+                                <td>@ksiazka.Wydawnictwo?.NazwaWydawnictwa</td>
+                                <td>
+                                    @if (ViewData["SelectedBranches"] != null && ((List<int>)ViewData["SelectedBranches"]).Any())
+                                    {
+                                        foreach (var kopia in ksiazka.Kopie)
+                                        {
+                                            if (ViewData["SelectedBranches"] != null && ((List<int>)ViewData["SelectedBranches"]).Contains(kopia.IdOddzial))
+                                            {
+                                                <p>@kopia.Oddzial?.Adres, @kopia.Oddzial?.Miasto, @kopia.Regal?.NrRegalu regał, @kopia.Regal?.Pietro piętro</p>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var kopia in ksiazka.Kopie)
+                                        {
+                                            <p>@kopia.Oddzial?.Adres, @kopia.Oddzial?.Miasto, @kopia.Regal?.NrRegalu regał, @kopia.Regal?.Pietro piętro</p>
+                                        }
+                                    }
+                                </td>
+                                <td>@ksiazka.Gatunek?.NazwaGatunku</td>
+                                <td>
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <a href="@Url.Action("Edit", "Ksiazka", new { id = ksiazka.IdKsiazki })" class="btn btn-warning btn-sm">Edytuj</a>
+                                        <a href="@Url.Action("Delete", "Ksiazka", new { id = ksiazka.IdKsiazki })" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć tę książkę?');">Usuń</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+       
+    </div>
+</body>
+</html>

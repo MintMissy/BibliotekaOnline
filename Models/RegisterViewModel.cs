@@ -8,6 +8,10 @@ public class RegisterViewModel
     public string Imie { get; set; } = null!;
     public string Nazwisko { get; set; } = null!;
     public string Login { get; set; } = null!;
+
+    [Required(ErrorMessage = "Hasło jest wymagane.")]
+    [MinLength(12, ErrorMessage = "Hasło musi mieć co najmniej 12 znaków.")]
+    [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
     public string Miasto { get; set; } = null!;
     public string Adres { get; set; } = null!;

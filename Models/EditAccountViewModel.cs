@@ -13,8 +13,9 @@ namespace TEST.Models
         public string NrTel { get; set; } = null!;
         public string Email { get; set; } = null!;
 
-        
+
         [DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Hasło musi mieć co najmniej 6 znaków.")]
         public string? NoweHaslo { get; set; }
 
         [Compare("NoweHaslo", ErrorMessage = "Hasła nie są zgodne.")]

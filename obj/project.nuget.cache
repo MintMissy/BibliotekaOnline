@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "K5E9qwkrsHc=",
+  "dgSpecHash": "W+gGa35fTAE=",
   "success": true,
   "projectFilePath": "/Users/dawidkostka/RiderProjects/BibliotekaOnline/TEST.csproj",
   "expectedPackageFiles": [
@@ -181,10 +181,7 @@
     "/Users/dawidkostka/.nuget/packages/system.threading.timer/4.3.0/system.threading.timer.4.3.0.nupkg.sha512",
     "/Users/dawidkostka/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
     "/Users/dawidkostka/.nuget/packages/system.xml.readerwriter/4.3.0/system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "/Users/dawidkostka/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512",
-    "/Users/dawidkostka/.nuget/packages/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
-    "/Users/dawidkostka/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
-    "/Users/dawidkostka/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.36/microsoft.netcore.app.host.osx-arm64.6.0.36.nupkg.sha512"
+    "/Users/dawidkostka/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": [
     {

@@ -3,30 +3,52 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text; 
 using TEST.Context;
 using TEST.Models;
 
 public class AccountController : Controller
 {
     private readonly ApplicationDbContext _context;
-
-    public AccountController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    private readonly IConfiguration _configuration; 
 
     
+    public AccountController(ApplicationDbContext context, IConfiguration configuration)
+    {
+        _context = context;
+        _configuration = configuration;
+    }
+
+    // --- METODA POMOCNICZA DO SZYFROWANIA ---
+    private string HashPassword(string password)
+    {
+        // Pobieramy klucz z appsettings.json
+        var key = _configuration["Security:PasswordKey"];
+
+        if (string.IsNullOrEmpty(key))
+        {
+            throw new Exception("Nie znaleziono klucza szyfrowania w appsettings.json");
+        }
+
+        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key)))
+        {
+            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hash);
+        }
+    }
+    // ----------------------------------------
+
     [HttpGet]
     public IActionResult Login()
     {
         return View();
     }
-    
+
     [HttpGet]
     public IActionResult Register()
     {
-        var model = new RegisterViewModel{};
-
+        var model = new RegisterViewModel { };
         return View(model);
     }
 
@@ -47,13 +69,13 @@ public class AccountController : Controller
                 return View(model);
             }
 
-
             var klient = new Czytelnicy
             {
                 Imie = model.Imie,
                 Nazwisko = model.Nazwisko,
                 Login = model.Login,
-                Haslo = model.Password, // Hasło powinno być zabiezpieczone haszowane w prawdziwej aplikacji ale tu nie jest :) 
+                
+                Haslo = HashPassword(model.Password),
                 Miasto = model.Miasto,
                 Adres = model.Adres,
                 NumerPocztowy = model.NumerPocztowy,
@@ -81,33 +103,35 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
+            
+            string hashedPassword = HashPassword(model.Password);
+
             var pracownik = _context.pracownicy
-                .FirstOrDefault(p => p.Login == model.Login && p.Haslo == model.Password);
+                .FirstOrDefault(p => p.Login == model.Login && p.Haslo == hashedPassword);
 
             if (pracownik != null)
             {
                 TempData["Message"] = "Zalogowano jako pracownik!";
                 HttpContext.Session.SetString("UserLogin", model.Login);
 
-                var role = pracownik.Stanowisko;  
+                var role = pracownik.Stanowisko;
 
-                
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, model.Login),
-                new Claim(ClaimTypes.Role, role) 
-            };
+                {
+                    new Claim(ClaimTypes.Name, model.Login),
+                    new Claim(ClaimTypes.Role, role)
+                };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
                 return RedirectToAction("Index", "Ksiazka");
             }
 
+            
             var klient = _context.czytelnicy
-                .FirstOrDefault(c => c.Login == model.Login && c.Haslo == model.Password);
+                .FirstOrDefault(c => c.Login == model.Login && c.Haslo == hashedPassword);
 
             if (klient != null)
             {
@@ -115,10 +139,10 @@ public class AccountController : Controller
                 HttpContext.Session.SetString("UserLogin", model.Login);
 
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, model.Login),
-                new Claim(ClaimTypes.Role, "Czytelnik")
-            };
+                {
+                    new Claim(ClaimTypes.Name, model.Login),
+                    new Claim(ClaimTypes.Role, "Czytelnik")
+                };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
@@ -141,6 +165,7 @@ public class AccountController : Controller
             RedirectUri = Url.Action("Login", "Account")
         });
     }
+
     public IActionResult MyAccount()
     {
         var userLogin = User.Identity.Name;

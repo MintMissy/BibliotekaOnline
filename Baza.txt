@@ -388,3 +388,10 @@ SELECT setval(pg_get_serial_sequence('oddzial', 'id_oddzial'), max(id_oddzial)) 
 SELECT setval(pg_get_serial_sequence('kopie', 'id_kopii'), max(id_kopii)) FROM kopie;
 SELECT setval(pg_get_serial_sequence('regal', 'id_regal'), max(id_regal)) FROM regal;
 
+UPDATE pracownicy
+set haslo = 'z9LCfIQjkMkjzAf/bOznn+MokFxFsQbhQ4NpQRdPhbI='
+where login like 'admin';
+
+UPDATE pracownicy
+set haslo = '9JKMPxNUT1HsKCZKh1+TSDVl54DRxbaNvd1jDfFvdeg='
+where login like 'pwisniewski';

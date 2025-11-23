@@ -39,7 +39,7 @@ public class KsiazkaController : Controller
             .Include(k => k.Gatunek)
             .Include(k => k.Kopie) 
             .ThenInclude(k => k.Regal) 
-            .ThenInclude(r => r.Oddzial) 
+            .ThenInclude(r => r.Oddzial)
             .AsQueryable();
 
         // Wyszukiwanie książek

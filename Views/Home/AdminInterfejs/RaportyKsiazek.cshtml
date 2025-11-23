@@ -1,0 +1,152 @@
+@model TEST.Models.RaportyKsiazekViewModel
+
+@{
+    ViewData["Title"] = "Raporty Książek";
+}
+
+<h1>Raporty Książek</h1>
+
+@if (Model != null)
+{
+    <!-- Bootstrap Tabs -->
+    <ul class="nav nav-tabs mb-3" id="raportyTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="oddzial-rok-tab" data-bs-toggle="tab" data-bs-target="#oddzial-rok" type="button" role="tab" aria-controls="oddzial-rok" aria-selected="true">
+                Książki według Oddziału i Roku
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="oddzial-gatunek-tab" data-bs-toggle="tab" data-bs-target="#oddzial-gatunek" type="button" role="tab" aria-controls="oddzial-gatunek" aria-selected="false">
+                Książki według Oddziału i Gatunku
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="suma-stron-tab" data-bs-toggle="tab" data-bs-target="#suma-stron" type="button" role="tab" aria-controls="suma-stron" aria-selected="false">
+                Suma Stron według Oddziału
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="raportyTabsContent">
+        <!-- Tab 1: Książki według Oddziału i Roku -->
+        <div class="tab-pane fade show active" id="oddzial-rok" role="tabpanel" aria-labelledby="oddzial-rok-tab">
+            <h2>Książki według Oddziału i Roku</h2>
+            @if (Model.KsiazkiWedlugOddzialuIRoku != null && Model.KsiazkiWedlugOddzialuIRoku.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Oddział</th>
+                            <th>Rok Wydania</th>
+                            <th>Liczba Kopii</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var oddzialGroup in Model.KsiazkiWedlugOddzialuIRoku.OrderBy(o => o.Key.Miasto))
+                        {
+                            var oddzial = oddzialGroup.Key;
+                            var yearsData = oddzialGroup.Value.OrderByDescending(y => y.Key).ToList();
+                            
+                            @for (int i = 0; i < yearsData.Count; i++)
+                            {
+                                <tr>
+                                    @if (i == 0)
+                                    {
+                                        <td rowspan="@yearsData.Count">@oddzial.Miasto, @oddzial.Adres</td>
+                                    }
+                                    <td>@yearsData[i].Key</td>
+                                    <td>@yearsData[i].Value</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">Brak danych do wyświetlenia.</div>
+            }
+        </div>
+
+        <!-- Tab 2: Książki według Oddziału i Gatunku -->
+        <div class="tab-pane fade" id="oddzial-gatunek" role="tabpanel" aria-labelledby="oddzial-gatunek-tab">
+            <h2>Książki według Oddziału i Gatunku</h2>
+            @if (Model.KsiazkiWedlugOddzialuIGatunku != null && Model.KsiazkiWedlugOddzialuIGatunku.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Oddział</th>
+                            <th>Gatunek</th>
+                            <th>Liczba Kopii</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var oddzialGroup in Model.KsiazkiWedlugOddzialuIGatunku.OrderBy(o => o.Key.Miasto))
+                        {
+                            var oddzial = oddzialGroup.Key;
+                            var gatunkiData = oddzialGroup.Value.OrderBy(g => g.Key.NazwaGatunku).ToList();
+                            
+                            @for (int i = 0; i < gatunkiData.Count; i++)
+                            {
+                                <tr>
+                                    @if (i == 0)
+                                    {
+                                        <td rowspan="@gatunkiData.Count">@oddzial.Miasto, @oddzial.Adres</td>
+                                    }
+                                    <td>@gatunkiData[i].Key.NazwaGatunku</td>
+                                    <td>@gatunkiData[i].Value</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">Brak danych do wyświetlenia.</div>
+            }
+        </div>
+
+        <!-- Tab 3: Suma Stron według Oddziału -->
+        <div class="tab-pane fade" id="suma-stron" role="tabpanel" aria-labelledby="suma-stron-tab">
+            <h2>Suma Stron według Oddziału</h2>
+            @if (Model.SumaStronWedlugOddzialu != null && Model.SumaStronWedlugOddzialu.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Oddział</th>
+                            <th>Suma Stron</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var oddzialData in Model.SumaStronWedlugOddzialu.OrderBy(o => o.Key.Miasto))
+                        {
+                            <tr>
+                                <td>@oddzialData.Key.Miasto, @oddzialData.Key.Adres</td>
+                                <td>@oddzialData.Value.ToString("N0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-info">
+                            <th>Suma całkowita:</th>
+                            <th>@Model.SumaStronWedlugOddzialu.Values.Sum().ToString("N0")</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info">Brak danych do wyświetlenia.</div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">Brak danych do wyświetlenia.</div>
+}
+

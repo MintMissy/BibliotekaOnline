@@ -11,6 +11,9 @@ public class RegisterViewModel
 
     [Required(ErrorMessage = "Hasło jest wymagane.")]
     [MinLength(12, ErrorMessage = "Hasło musi mieć co najmniej 12 znaków.")]
+    [RegularExpression(
+        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$",
+        ErrorMessage = "Hasło musi zawierać małą literę, dużą literę, cyfrę oraz znak specjalny.")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
     public string Miasto { get; set; } = null!;

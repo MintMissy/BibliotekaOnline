@@ -14,8 +14,11 @@ namespace TEST.Models
         public string Email { get; set; } = null!;
 
 
-        [DataType(DataType.Password)]
-        [MinLength(6, ErrorMessage = "Hasło musi mieć co najmniej 6 znaków.")]
+         [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Hasło jest wymagane.")]
+        [MinLength(8, ErrorMessage = "Hasło musi mieć co najmniej 8 znaków.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$",
+            ErrorMessage = "Hasło musi zawierać małą literę, dużą literę, cyfrę i znak specjalny.")]
         public string? NoweHaslo { get; set; }
 
         [Compare("NoweHaslo", ErrorMessage = "Hasła nie są zgodne.")]

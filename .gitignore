@@ -5,8 +5,8 @@ Thumbs.db
 .vscode/
 
 
-[Bb]in/
-[Oo]bj/
+bin/
+obj/
 
 
 *.user

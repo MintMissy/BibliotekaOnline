@@ -52,6 +52,13 @@ public class AccountController : Controller
         return View(model);
     }
 
+    [HttpGet]
+    public IActionResult ForgotPassword()
+    {
+        var model = new ForgotPasswordViewModel { };
+        return View(model);
+    }
+
     [HttpPost]
     public IActionResult Register(RegisterViewModel model)
     {

@@ -17,28 +17,27 @@ namespace TEST.Controllers
 
         public IActionResult Index()
         {
-
             var userLogin = User.Identity.Name;
-
             bool isLibrarianOrAdmin = User.IsInRole("Bibliotekarz") || User.IsInRole("Administrator");
 
-            Console.WriteLine("User role: " + (isLibrarianOrAdmin ? "Bibliotekarz/Administrator" : "Inna rola"));
+            var wypozyczeniaQuery = _context.wypozyczenia
+                .Include(w => w.Czytelnicy)
+                .Include(w => w.Kopie)
+                .Include(w => w.Oddzial)
+                .AsQueryable();
+
+            if (!isLibrarianOrAdmin)
+            {
+                wypozyczeniaQuery = wypozyczeniaQuery.Where(w => w.Czytelnicy != null && w.Czytelnicy.Login == userLogin);
+            }
 
             var wypozyczeniaKopieViewModel = new WypozyczeniaKopieViewModel
             {
-                Wypozyczenia = _context.wypozyczenia
-                    .Include(w => w.Czytelnicy)
-                    .Include(w => w.Kopie)
-                    .Include(w => w.Oddzial)
-                    .Where(w => w.Czytelnicy.Login == userLogin)
-                    .ToList(),
-
+                Wypozyczenia = wypozyczeniaQuery.ToList(),
                 Kopie = _context.kopie
                     .Include(k => k.Ksiazka)
                     .ToList()
             };
-
-            Console.WriteLine("Liczba wypożyczeń: " + wypozyczeniaKopieViewModel.Wypozyczenia.Count);
 
             return View("~/Views/Home/WypozyczeniaKopie.cshtml", wypozyczeniaKopieViewModel);
         }
@@ -79,23 +78,9 @@ namespace TEST.Controllers
             wypozyczenie.DataZwrotu = dataZwrotu.ToUniversalTime();
 
             _context.SaveChanges();
-            var userLogin = User.Identity.Name;
-            var wypozyczeniaKopieViewModel = new WypozyczeniaKopieViewModel
-            {
-                Wypozyczenia = _context.wypozyczenia
-                    .Include(w => w.Czytelnicy)
-                    .Include(w => w.Kopie)
-                    .Include(w => w.Oddzial)
-                    .Where(w => w.Czytelnicy.Login == userLogin)
-                    .ToList(),
 
-                Kopie = _context.kopie
-                    .Include(k => k.Ksiazka)
-                    .ToList()
-            };
-
-
-            return View("~/Views/Home/WypozyczeniaKopie.cshtml", wypozyczeniaKopieViewModel);
+            // Redirect to Index to use the same logic for filtering
+            return RedirectToAction(nameof(Index));
         }
     }
 

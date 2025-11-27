@@ -11,32 +11,37 @@
                         <div class="mb-3">
                             <label asp-for="Login" class="form-label">Login</label>
                             <input asp-for="Login" class="form-control" placeholder="Wprowadź swój login" required />
+                            <span asp-validation-for="Login" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Password" class="form-label">Hasło</label>
                             <input asp-for="Password" type="password" class="form-control" placeholder="Wprowadź swoje hasło" required />
-                            @Html.ValidationMessageFor(model => model.Password, "Hasło musi zawierać małą literę, dużą literę, cyfrę oraz znak specjalny.", new { @class = "text-danger" })
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Email" class="form-label">Email</label>
                             <input asp-for="Email" type="email" class="form-control" placeholder="Wprowadź swój email" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Imie" class="form-label">Imię</label>
                             <input asp-for="Imie" class="form-control" placeholder="Wprowadź swoje imię" required />
+                            <span asp-validation-for="Imie" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Nazwisko" class="form-label">Nazwisko</label>
                             <input asp-for="Nazwisko" class="form-control" placeholder="Wprowadź swoje nazwisko" required />
+                            <span asp-validation-for="Nazwisko" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="NrTel" class="form-label">Numer Telefonu</label>
                             <input asp-for="NrTel" class="form-control" placeholder="Wprowadź numer telefonu" required />
+                            <span asp-validation-for="NrTel" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -45,16 +50,19 @@
                         <div class="mb-3">
                             <label asp-for="Adres" class="form-label">Adres</label>
                             <input asp-for="Adres" class="form-control" placeholder="Wprowadź swój adres" />
+                            <span asp-validation-for="Adres" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Miasto" class="form-label">Miasto</label>
                             <input asp-for="Miasto" class="form-control" placeholder="Wprowadź swoje miasto" />
+                            <span asp-validation-for="Miasto" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="NumerPocztowy" class="form-label">Numer Pocztowy</label>
                             <input asp-for="NumerPocztowy" class="form-control" placeholder="Wprowadź numer pocztowy" />
+                            <span asp-validation-for="NumerPocztowy" class="text-danger"></span>
                         </div>
                     </div>
                 </div>

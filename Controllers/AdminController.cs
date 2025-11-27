@@ -5,15 +5,18 @@ using TEST.Context;
 using System.Linq;
 using TEST.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TEST.Services;
 
 [Authorize(Roles = "Administrator, Bibliotekarz")]
 public class AdminController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly RaportyKsiazekService _raportyKsiazekService;
 
-    public AdminController(ApplicationDbContext context)
+    public AdminController(ApplicationDbContext context, RaportyKsiazekService raportyKsiazekService)
     {
         _context = context;
+        _raportyKsiazekService = raportyKsiazekService;
     }
 
     public IActionResult Index(string entity)
@@ -105,60 +108,7 @@ public class AdminController : Controller
     [Authorize(Roles = "Administrator")]
     public IActionResult RaportyKsiazek()
     {
-        var viewModel = new RaportyKsiazekViewModel();
-
-        // Load all necessary data first
-        var kopie = _context.kopie?
-            .Include(k => k.Oddzial)
-            .Include(k => k.Ksiazka)
-            .ThenInclude(k => k.Gatunek)
-            .Where(k => k.Oddzial != null && k.Ksiazka != null)
-            .ToList();
-
-        if (kopie == null || !kopie.Any())
-        {
-            viewModel.KsiazkiWedlugOddzialuIRoku = new Dictionary<Oddzial, Dictionary<int, int>>();
-            viewModel.KsiazkiWedlugOddzialuIGatunku = new Dictionary<Oddzial, Dictionary<Gatunek, int>>();
-            viewModel.SumaStronWedlugOddzialu = new Dictionary<Oddzial, int>();
-            return View("~/Views/Home/AdminInterfejs/RaportyKsiazek.cshtml", viewModel);
-        }
-
-        // Tab 1: Książki według Oddziału i Roku
-        var tab1Data = kopie
-            .GroupBy(k => new { k.Oddzial, k.Ksiazka.RokWydania })
-            .Select(g => new { g.Key.Oddzial, g.Key.RokWydania, Count = g.Count() })
-            .ToList();
-
-        viewModel.KsiazkiWedlugOddzialuIRoku = tab1Data
-            .GroupBy(x => x.Oddzial!)
-            .ToDictionary(
-                g => g.Key,
-                g => g.ToDictionary(x => x.RokWydania, x => x.Count)
-            );
-
-        // Tab 2: Książki według Oddziału i Gatunku
-        var tab2Data = kopie
-            .Where(k => k.Ksiazka.Gatunek != null)
-            .GroupBy(k => new { k.Oddzial, k.Ksiazka.Gatunek })
-            .Select(g => new { g.Key.Oddzial, g.Key.Gatunek, Count = g.Count() })
-            .ToList();
-
-        viewModel.KsiazkiWedlugOddzialuIGatunku = tab2Data
-            .GroupBy(x => x.Oddzial!)
-            .ToDictionary(
-                g => g.Key,
-                g => g.ToDictionary(x => x.Gatunek!, x => x.Count)
-            );
-
-        // Tab 3: Suma Stron według Oddziału (SUM operation)
-        var tab3Data = kopie
-            .GroupBy(k => k.Oddzial)
-            .Select(g => new { Oddzial = g.Key, TotalPages = g.Sum(k => k.Ksiazka.LiczbaStron) })
-            .ToList();
-
-        viewModel.SumaStronWedlugOddzialu = tab3Data
-            .ToDictionary(x => x.Oddzial!, x => x.TotalPages);
-
+        var viewModel = _raportyKsiazekService.GenerateReports();
         return View("~/Views/Home/AdminInterfejs/RaportyKsiazek.cshtml", viewModel);
     }
 

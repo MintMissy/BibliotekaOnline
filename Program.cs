@@ -4,10 +4,11 @@ using Microsoft.Extensions.Logging;
 using TEST.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
+using TEST.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Rejestracja pamiêci podrêcznej dla sesji
+// Rejestracja pamiï¿½ci podrï¿½cznej dla sesji
 builder.Services.AddDistributedMemoryCache();
 
 // Konfiguracja sesji
@@ -30,13 +31,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login"; // Œcie¿ka logowania
-        options.LogoutPath = "/Account/Logout"; // Œcie¿ka wylogowania
-        options.AccessDeniedPath = "/Account/AccessDenied"; // Brak dostêpu
-        options.SlidingExpiration = true; // Odœwie¿anie sesji
+        options.LoginPath = "/Account/Login"; // ï¿½cieï¿½ka logowania
+        options.LogoutPath = "/Account/Logout"; // ï¿½cieï¿½ka wylogowania
+        options.AccessDeniedPath = "/Account/AccessDenied"; // Brak dostï¿½pu
+        options.SlidingExpiration = true; // Odï¿½wieï¿½anie sesji
     });
 
 builder.Services.AddControllersWithViews();
+
+// Rejestracja strategii raportÃ³w i serwisu raportÃ³w
+builder.Services.AddScoped<KsiazkiWedlugOddzialuIRokuStrategy>();
+builder.Services.AddScoped<KsiazkiWedlugOddzialuIGatunkuStrategy>();
+builder.Services.AddScoped<SumaStronWedlugOddzialuStrategy>();
+builder.Services.AddScoped<IReportStrategyFactory, ReportStrategyFactory>();
+builder.Services.AddScoped<RaportyKsiazekService>();
 
 var app = builder.Build();
 

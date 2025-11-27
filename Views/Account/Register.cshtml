@@ -16,6 +16,7 @@
                         <div class="mb-3">
                             <label asp-for="Password" class="form-label">Hasło</label>
                             <input asp-for="Password" type="password" class="form-control" placeholder="Wprowadź swoje hasło" required />
+                            @Html.ValidationMessageFor(model => model.Password, "Hasło musi zawierać małą literę, dużą literę, cyfrę oraz znak specjalny.", new { @class = "text-danger" })
                         </div>
 
                         <div class="mb-3">
